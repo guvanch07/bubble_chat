@@ -12,23 +12,8 @@ class _BottomNavigationBar extends StatefulWidget {
   __BottomNavigationBarState createState() => __BottomNavigationBarState();
 }
 
-class __BottomNavigationBarState extends State<_BottomNavigationBar>
-    with TickerProviderStateMixin {
+class __BottomNavigationBarState extends State<_BottomNavigationBar> {
   var selectedIndex = 0;
-
-  late AnimationController _controller;
-  @override
-  void initState() {
-    _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 800));
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
 
   void handleItemSelected(int index) {
     setState(() {
@@ -67,34 +52,30 @@ class __BottomNavigationBarState extends State<_BottomNavigationBar>
             _NavigationBarItem(
               index: 0,
               lable: 'Messages',
-              icon: AnimatedIcons.home_menu,
+              icon: CupertinoIcons.bubble_left_fill,
               isSelected: (selectedIndex == 0),
               onTap: handleItemSelected,
-              controller: _controller,
             ),
             _NavigationBarItem(
               index: 1,
               lable: 'Notifications',
-              icon: AnimatedIcons.ellipsis_search,
+              icon: CupertinoIcons.camera,
               isSelected: (selectedIndex == 1),
               onTap: handleItemSelected,
-              controller: _controller,
             ),
             _NavigationBarItem(
               index: 2,
               lable: 'Calls',
-              icon: AnimatedIcons.menu_arrow,
+              icon: CupertinoIcons.phone_fill,
               isSelected: (selectedIndex == 2),
               onTap: handleItemSelected,
-              controller: _controller,
             ),
             _NavigationBarItem(
               index: 3,
               lable: 'Contacts',
-              icon: AnimatedIcons.add_event,
+              icon: CupertinoIcons.settings,
               isSelected: (selectedIndex == 3),
               onTap: handleItemSelected,
-              controller: _controller,
             ),
           ],
         ),
@@ -111,15 +92,13 @@ class _NavigationBarItem extends StatelessWidget {
     required this.icon,
     this.isSelected = false,
     required this.onTap,
-    required this.controller,
   }) : super(key: key);
 
   final int index;
   final String lable;
-  final AnimatedIconData icon;
+  final IconData icon;
   final bool isSelected;
   final ValueChanged<int> onTap;
-  final AnimationController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -140,13 +119,10 @@ class _NavigationBarItem extends StatelessWidget {
         child: SizedBox(
           width: 50,
           height: 50,
-          child: Center(
-            child: AnimatedIcon(
-              progress: controller,
-              icon: icon,
-              size: 22,
-              color: isSelected ? AppColors.accent : null,
-            ),
+          child: Icon(
+            icon,
+            size: 22,
+            color: isSelected ? AppColors.accent : null,
           ),
         ),
       ),

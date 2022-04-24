@@ -6,10 +6,12 @@ import 'package:presentation/pages/calls_page/calls_page.dart';
 import 'package:presentation/pages/contact_page/contacts_page.dart';
 import 'package:presentation/pages/message/main_messages_page.dart';
 import 'package:presentation/pages/notification/notifications_page.dart';
+import 'package:presentation/widgets/animated_icon.dart';
 import 'package:presentation/widgets/avatar.dart';
 import 'package:presentation/widgets/icon_avatar.dart';
 
 part 'nav_bar_widget.dart';
+part 'bottom_sheet.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -57,7 +59,7 @@ class HomeScreen extends StatelessWidget {
         leadingWidth: 54,
         leading: Align(
           alignment: Alignment.centerRight,
-          child: Avatar(url: Helpers.randomPictureUrl(), radius: 45),
+          child: Avatar(url: Helpers.randomPictureUrl(), radius: 40),
         ),
         actions: [
           IconAvatar(
@@ -65,7 +67,10 @@ class HomeScreen extends StatelessWidget {
             color: AppColors.accent,
             icon: const Icon(CupertinoIcons.add, size: 18),
             iconColor: Colors.white,
-            onPressed: () {},
+            onPressed: () => showModalBottomSheet(
+                backgroundColor: Colors.transparent,
+                context: context,
+                builder: (context) => const _CustomBottomSheet()),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
