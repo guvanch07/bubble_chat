@@ -66,7 +66,7 @@ class __BottomNavigationBarState extends State<_BottomNavigationBar> {
             _NavigationBarItem(
               index: 2,
               lable: 'Calls',
-              icon: CupertinoIcons.phone_fill,
+              icon: CupertinoIcons.music_albums,
               isSelected: (selectedIndex == 2),
               onTap: handleItemSelected,
             ),

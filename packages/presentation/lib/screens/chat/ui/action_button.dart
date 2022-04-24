@@ -10,48 +10,61 @@ class _ActionBar extends StatelessWidget {
       top: false,
       child: Row(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              border: Border(
-                right: BorderSide(
-                  width: 2,
-                  color: Theme.of(context).dividerColor,
-                ),
-              ),
-            ),
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Icon(
-                CupertinoIcons.camera_fill,
-              ),
-            ),
-          ),
           const Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: 16.0),
-              child: TextField(
-                style: TextStyle(fontSize: 14),
-                decoration: InputDecoration(
-                  hintText: 'Type something...',
-                  border: InputBorder.none,
-                ),
-              ),
+              padding: EdgeInsets.only(left: 10.0),
+              child: _ActionSection(),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-              left: 12,
-              right: 24.0,
-            ),
-            child: GlowingActionButton(
-              color: AppColors.accent,
-              icon: Icons.send_rounded,
-              onPressed: () {
-                print('TODO: send a message');
-              },
-            ),
-          ),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: IconAvatar(
+                color: AppColors.accent,
+                icon: const Icon(CupertinoIcons.mic_fill, size: 25),
+                iconColor: AppColors.textLigth,
+                onPressed: () {},
+                radius: 60),
+          )
         ],
+      ),
+    );
+  }
+}
+
+class _ActionSection extends StatelessWidget {
+  const _ActionSection({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomTextFields(
+      prefix: IconButton(
+        icon: const Icon(
+          Icons.emoji_emotions_outlined,
+          size: 20,
+          color: AppColors.accent,
+        ),
+        onPressed: () {},
+      ),
+      suffix: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.18,
+        child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+          InkWell(
+            splashColor: AppColors.accent,
+            onTap: () {},
+            child: const Icon(CupertinoIcons.folder,
+                size: 18, color: AppColors.accent),
+          ),
+          const Spacer(),
+          InkWell(
+            splashColor: AppColors.accent,
+            onTap: () {},
+            child: const Icon(CupertinoIcons.camera_fill,
+                size: 18, color: AppColors.accent),
+          ),
+          const Spacer(),
+        ]),
       ),
     );
   }
