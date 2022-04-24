@@ -1,4 +1,4 @@
-# flash_chat
+# stream_chat
 
 A new Flutter project.
 
