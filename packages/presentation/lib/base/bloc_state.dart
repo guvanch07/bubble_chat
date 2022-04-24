@@ -7,3 +7,10 @@ abstract class BlocState<S extends StatefulWidget, B extends BaseBloc>
   @protected
   final B bloc = GetIt.I.get<B>();
 }
+
+//! scope statefull widget
+abstract class BlocScopeState<S extends StatefulBuilder, B extends BaseBloc>
+    extends State<S> {
+  @protected
+  final B bloc = GetIt.I.get<B>();
+}
