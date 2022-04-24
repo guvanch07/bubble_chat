@@ -16,7 +16,7 @@ packages:
     source: hosted
     version: "2.1.0"
   cached_network_image:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: cached_network_image
       url: "https://pub.dartlang.org"
@@ -72,7 +72,7 @@ packages:
     source: hosted
     version: "3.0.1"
   cupertino_icons:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: cupertino_icons
       url: "https://pub.dartlang.org"
@@ -86,7 +86,7 @@ packages:
     source: hosted
     version: "1.2.0"
   faker:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: faker
       url: "https://pub.dartlang.org"
@@ -133,7 +133,7 @@ packages:
     source: hosted
     version: "1.0.4"
   flutter_neumorphic:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_neumorphic
       url: "https://pub.dartlang.org"
@@ -145,7 +145,7 @@ packages:
     source: sdk
     version: "0.0.0"
   google_fonts:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: google_fonts
       url: "https://pub.dartlang.org"
@@ -173,7 +173,7 @@ packages:
     source: hosted
     version: "0.17.0"
   jiffy:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: jiffy
       url: "https://pub.dartlang.org"
@@ -187,7 +187,7 @@ packages:
     source: hosted
     version: "1.0.1"
   logger:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: logger
       url: "https://pub.dartlang.org"
@@ -298,13 +298,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
-  presentation:
-    dependency: "direct main"
-    description:
-      path: "packages/presentation"
-      relative: true
-    source: path
-    version: "0.0.0"
   process:
     dependency: transitive
     description:
