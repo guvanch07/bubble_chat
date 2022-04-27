@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-
-import 'package:presentation/core/theme/theme.dart';
+import 'package:presentation/core/theme/neumorphic.dart';
 
 class Avatar extends StatelessWidget {
   final double radius;
@@ -23,15 +22,7 @@ class Avatar extends StatelessWidget {
       height: radius,
       width: radius,
       child: Neumorphic(
-        style: const NeumorphicStyle(
-          shadowDarkColor: Colors.black,
-          shadowLightColorEmboss: AppColors.cardLight,
-          shadowLightColor: AppColors.cardLight,
-          shadowDarkColorEmboss: Colors.black,
-          color: AppColors.cardDark,
-          depth: 3,
-          boxShape: NeumorphicBoxShape.circle(),
-        ),
+        style: CustomNeumorphicStyle.neumorphicD3,
         child: Container(
           margin: const EdgeInsets.all(4),
           decoration: BoxDecoration(

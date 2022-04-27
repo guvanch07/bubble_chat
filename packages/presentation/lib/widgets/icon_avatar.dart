@@ -1,5 +1,5 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:presentation/core/theme/theme.dart';
+import 'package:presentation/core/theme/neumorphic.dart';
 
 class IconAvatar extends StatelessWidget {
   final double radius;
@@ -27,15 +27,7 @@ class IconAvatar extends StatelessWidget {
       height: radius,
       width: radius,
       child: Neumorphic(
-        style: const NeumorphicStyle(
-          shadowDarkColor: Colors.black,
-          shadowLightColorEmboss: AppColors.cardLight,
-          shadowLightColor: AppColors.cardLight,
-          shadowDarkColorEmboss: Colors.black,
-          color: AppColors.cardDark,
-          depth: 3,
-          boxShape: NeumorphicBoxShape.circle(),
-        ),
+        style: CustomNeumorphicStyle.neumorphicD3,
         child: Container(
           margin: EdgeInsets.all(margin ?? 4),
           decoration: BoxDecoration(

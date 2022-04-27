@@ -36,15 +36,8 @@ class __BottomNavigationBarState extends State<_BottomNavigationBar> {
       height: 70,
       margin: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
       child: Neumorphic(
-        style: const NeumorphicStyle(
-          shadowDarkColor: Colors.black,
-          shadowLightColorEmboss: AppColors.cardLight,
-          shadowLightColor: AppColors.cardLight,
-          shadowDarkColorEmboss: Colors.black,
-          //shape: NeumorphicShape.concave,
+        style: CustomNeumorphicStyle.neumorphicD3.copyWith(
           boxShape: NeumorphicBoxShape.stadium(),
-          color: AppColors.cardDark,
-          depth: 2,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

@@ -105,3 +105,15 @@ class _MessageTile extends StatelessWidget {
     );
   }
 }
+
+class PeakAndPopWidget extends StatelessWidget {
+  const PeakAndPopWidget({
+    Key? key,
+    required this.messageData,
+  }) : super(key: key);
+  final MessageData messageData;
+  @override
+  Widget build(BuildContext context) {
+    return CachedNetworkImage(imageUrl: messageData.profilePicture);
+  }
+}

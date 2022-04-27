@@ -1,4 +1,5 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:presentation/core/theme/neumorphic.dart';
 import 'package:presentation/core/theme/theme.dart';
 
 class CustomTextFields extends StatelessWidget {
@@ -13,15 +14,8 @@ class CustomTextFields extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Neumorphic(
-      style: const NeumorphicStyle(
-        shadowDarkColor: Colors.black,
-        shadowLightColorEmboss: AppColors.cardLight,
-        shadowLightColor: AppColors.cardLight,
-        shadowDarkColorEmboss: Colors.black,
-        color: AppColors.cardDark,
-        depth: -2,
-        boxShape: NeumorphicBoxShape.stadium(),
-      ),
+      style: CustomNeumorphicStyle.neumorphicD3
+          .copyWith(depth: -3, boxShape: const NeumorphicBoxShape.stadium()),
       child: TextField(
         cursorColor: AppColors.accent,
         style: const TextStyle(fontSize: 14),

@@ -51,19 +51,18 @@ class _CustomAnimatedButtonState extends State<CustomAnimatedButton>
     return IconAvatar(
         radius: 40,
         color: AppColors.accent,
-        icon: const Text(""),
+        icon: AnimatedIcon(
+          color: Colors.white,
+          icon: widget.animatedIcon,
+          progress: _controller,
+        ),
         iconColor: Colors.white,
         onPressed: () {},
         child: InkWell(
-          onTap: () {
+          onTap: () async {
             animateWidget();
             widget.onTap;
           },
-          child: AnimatedIcon(
-            color: Colors.white,
-            icon: widget.animatedIcon,
-            progress: _controller,
-          ),
         ));
   }
 }

@@ -9,13 +9,7 @@ class _CustomBottomSheet extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.5,
       margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       child: Neumorphic(
-        style: NeumorphicStyle(
-          shadowDarkColor: Colors.black,
-          shadowLightColorEmboss: AppColors.cardLight,
-          shadowLightColor: AppColors.cardLight,
-          shadowDarkColorEmboss: Colors.black,
-          color: AppColors.cardDark,
-          depth: 3,
+        style: CustomNeumorphicStyle.neumorphicD3.copyWith(
           boxShape: NeumorphicBoxShape.roundRect(
             BorderRadius.circular(20),
           ),

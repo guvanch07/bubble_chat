@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:presentation/core/heplers/random.dart';
+import 'package:presentation/core/theme/neumorphic.dart';
 import 'package:presentation/core/theme/theme.dart';
-import 'package:presentation/pages/calls_page/calls_page.dart';
-import 'package:presentation/pages/contact_page/contacts_page.dart';
+
 import 'package:presentation/pages/message/main_messages_page.dart';
-import 'package:presentation/pages/notification/notifications_page.dart';
-import 'package:presentation/widgets/animated_icon.dart';
+import 'package:presentation/pages/music_page/music_page.dart';
+
+import 'package:presentation/pages/photo_page/photo_page.dart';
+import 'package:presentation/pages/settings_page/settings_page.dart';
+import 'package:presentation/widgets/animation/animated_icon.dart';
 import 'package:presentation/widgets/avatar.dart';
 import 'package:presentation/widgets/icon_avatar.dart';
 
@@ -19,11 +22,11 @@ class HomeScreen extends StatelessWidget {
   final ValueNotifier<int> pageIndex = ValueNotifier(0);
   final ValueNotifier<String> title = ValueNotifier('Messages');
 
-  final pages = const [
-    MessagesPage(),
-    NotificationsPage(),
-    CallsPage(),
-    ContactsPage(),
+  final pages = [
+    const MessagesPage(),
+    const PhotoPage(),
+    MusicPage(),
+    const SettingsPage(),
   ];
 
   final pageTitles = const [

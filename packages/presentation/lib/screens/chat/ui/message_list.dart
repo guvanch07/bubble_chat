@@ -65,13 +65,7 @@ class _MessageTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Neumorphic(
-              style: NeumorphicStyle(
-                shadowDarkColor: Colors.black,
-                shadowLightColorEmboss: AppColors.cardLight,
-                shadowLightColor: AppColors.cardLight,
-                shadowDarkColorEmboss: Colors.black,
-                color: AppColors.cardDark,
-                depth: 3,
+              style: CustomNeumorphicStyle.neumorphicD3.copyWith(
                 boxShape: NeumorphicBoxShape.roundRect(
                   const BorderRadius.only(
                     topLeft: Radius.circular(_borderRadius),
@@ -127,13 +121,8 @@ class _MessageOwnTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Neumorphic(
-              style: NeumorphicStyle(
-                shadowDarkColor: Colors.black,
-                shadowLightColorEmboss: AppColors.cardLight,
-                shadowLightColor: AppColors.cardLight,
-                shadowDarkColorEmboss: Colors.black,
+              style: CustomNeumorphicStyle.neumorphicD3.copyWith(
                 color: AppColors.accent,
-                depth: 3,
                 boxShape: NeumorphicBoxShape.roundRect(
                   const BorderRadius.only(
                     topLeft: Radius.circular(_borderRadius),

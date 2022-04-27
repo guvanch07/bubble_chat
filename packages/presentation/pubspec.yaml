@@ -24,10 +24,10 @@ dependencies:
 
   data:
     path: ../data
-  domain:
-    path: ../domain
+
   flutter_svg: ^0.22.0
-  # firebase_core: ^1.13.1
+  provider: ^6.0.2
+  
 
 
 dev_dependencies:

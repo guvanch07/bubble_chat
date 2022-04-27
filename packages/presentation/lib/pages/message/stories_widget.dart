@@ -9,13 +9,7 @@ class _Stories extends StatelessWidget {
       height: 140,
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Neumorphic(
-        style: NeumorphicStyle(
-          shadowDarkColor: Colors.black,
-          shadowLightColorEmboss: AppColors.cardLight,
-          shadowLightColor: AppColors.cardLight,
-          shadowDarkColorEmboss: Colors.black,
-          color: AppColors.cardDark,
-          depth: 3,
+        style: CustomNeumorphicStyle.neumorphicD3.copyWith(
           boxShape: NeumorphicBoxShape.roundRect(
             BorderRadius.circular(30),
           ),
