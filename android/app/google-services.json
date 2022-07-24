@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "481927192434",
+    "project_id": "stream-chat-cb46c",
+    "storage_bucket": "stream-chat-cb46c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:481927192434:android:22a574523c42331f8bc7eb",
+        "android_client_info": {
+          "package_name": "com.example.flash_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "481927192434-2l78t7fh9kn2ald5h95r30r7uhjqfpdq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWZLdWKtK_CusDptoHPVFO-Pz3bjMuhBg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "481927192434-2l78t7fh9kn2ald5h95r30r7uhjqfpdq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "481927192434-bodqksp0g1tc6u798a5j7sq33o6ev28e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flashChat"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
