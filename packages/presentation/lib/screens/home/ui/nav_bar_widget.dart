@@ -17,14 +17,6 @@ class __BottomNavigationBarState extends State<_BottomNavigationBar> {
 
   void handleItemSelected(int index) {
     setState(() {
-      // bool isSel = selectedIndex == index;
-      // if (isSel) {
-      //   _controller.reverse();
-      // } else {
-      //   _controller.forward();
-      // }
-
-      // isSel = !isSel;
       selectedIndex = index;
     });
     widget.onItemSelected(index);

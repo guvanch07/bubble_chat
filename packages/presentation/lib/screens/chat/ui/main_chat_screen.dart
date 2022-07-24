@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:presentation/core/theme/theme.dart';
-import 'package:presentation/models/message_data.dart';
+import 'package:domain/models/message_data.dart';
 import 'package:presentation/widgets/avatar.dart';
 import 'package:presentation/widgets/icon_avatar.dart';
 import 'package:presentation/widgets/text_field.dart';

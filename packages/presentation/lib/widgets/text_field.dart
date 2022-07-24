@@ -12,6 +12,7 @@ class CustomTextFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int maxLine = 1;
     return Neumorphic(
       style: const NeumorphicStyle(
         shadowDarkColor: Colors.black,
@@ -25,6 +26,7 @@ class CustomTextFields extends StatelessWidget {
       child: TextField(
         cursorColor: AppColors.accent,
         style: const TextStyle(fontSize: 14),
+        maxLines: maxLine,
         decoration: InputDecoration(
           prefixIcon: prefix,
           suffixIcon: suffix,

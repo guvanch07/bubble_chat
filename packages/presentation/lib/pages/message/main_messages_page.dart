@@ -5,8 +5,8 @@ import 'package:jiffy/jiffy.dart';
 
 import 'package:presentation/core/heplers/random.dart';
 import 'package:presentation/core/theme/theme.dart';
-import 'package:presentation/models/message_data.dart';
-import 'package:presentation/models/story_data.dart';
+import 'package:domain/models/message_data.dart';
+import 'package:domain/models/story_data.dart';
 import 'package:presentation/screens/chat/ui/main_chat_screen.dart';
 import 'package:presentation/screens/story/main_story.dart';
 import 'package:presentation/widgets/avatar.dart';
