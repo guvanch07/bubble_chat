@@ -6,7 +6,6 @@ import 'package:presentation/screens/auth/app_bloc.dart';
 import 'package:presentation/screens/auth/bloc/auth_error.dart';
 import 'package:presentation/screens/auth/ui/login_view.dart';
 import 'package:presentation/screens/auth/ui/register_view.dart';
-import 'package:presentation/screens/home/ui/main_home_screen.dart';
 import 'package:presentation/widgets/dialogs/auth_error_dialog.dart';
 import 'package:presentation/widgets/loading/loading_screen.dart';
 import 'package:domain/core/enums/current_view.dart';
@@ -20,20 +19,19 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.light(),
       darkTheme: AppTheme.dark(),
       themeMode: ThemeMode.dark,
-      title: 'Chatter',
-      home: const HomePage(),
+      home: const HomeScreen(),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeScreenState extends State<HomeScreen> {
   late final AppBloc appBloc;
   StreamSubscription<AuthError?>? _authErrorSub;
   StreamSubscription<bool>? _isLoadingSub;
@@ -106,9 +104,11 @@ class _HomePageState extends State<HomePage> {
                 );
 
               case CurrentView.home:
-                return HomeScreen();
+                return const HomeScreen();
               case CurrentView.createContact:
-                return Container();
+                return Container(
+                  color: Colors.amber,
+                );
             }
         }
       },

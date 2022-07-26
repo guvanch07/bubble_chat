@@ -70,6 +70,12 @@ class AppBloc {
     _viewsBloc.dispose();
   }
 
+  void logout() {
+    _authBloc.logout.add(
+      null,
+    );
+  }
+
   void deleteAccount() {
     _authBloc.deleteAccount.add(null);
   }
