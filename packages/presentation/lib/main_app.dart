@@ -6,9 +6,11 @@ import 'package:presentation/screens/auth/app_bloc.dart';
 import 'package:presentation/screens/auth/bloc/auth_error.dart';
 import 'package:presentation/screens/auth/ui/login_view.dart';
 import 'package:presentation/screens/auth/ui/register_view.dart';
+import 'package:presentation/screens/home/ui/main_home_screen.dart';
 import 'package:presentation/widgets/dialogs/auth_error_dialog.dart';
 import 'package:presentation/widgets/loading/loading_screen.dart';
 import 'package:domain/core/enums/current_view.dart';
+import 'package:get_it/get_it.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -19,19 +21,19 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.light(),
       darkTheme: AppTheme.dark(),
       themeMode: ThemeMode.dark,
-      home: const HomeScreen(),
+      home: const MainAppPage(),
     );
   }
 }
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class MainAppPage extends StatefulWidget {
+  const MainAppPage({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<MainAppPage> createState() => _MainAppPageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _MainAppPageState extends State<MainAppPage> {
   late final AppBloc appBloc;
   StreamSubscription<AuthError?>? _authErrorSub;
   StreamSubscription<bool>? _isLoadingSub;
@@ -39,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    appBloc = AppBloc();
+    appBloc = GetIt.I.get<AppBloc>();
   }
 
   @override
@@ -104,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
 
               case CurrentView.home:
-                return const HomeScreen();
+                return HomeScreen(bloc: appBloc);
               case CurrentView.createContact:
                 return Container(
                   color: Colors.amber,

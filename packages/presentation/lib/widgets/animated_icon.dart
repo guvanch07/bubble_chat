@@ -57,7 +57,7 @@ class _CustomAnimatedButtonState extends State<CustomAnimatedButton>
         child: InkWell(
           onTap: () {
             animateWidget();
-            widget.onTap;
+            widget.onTap();
           },
           child: AnimatedIcon(
             color: Colors.white,

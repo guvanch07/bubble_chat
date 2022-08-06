@@ -57,7 +57,7 @@ class ChatScreen extends StatelessWidget {
   }
 }
 
-final List<Widget>? _actions = [
+final List<Widget> _actions = [
   IconAvatar(
       margin: 0,
       icon: const Icon(
