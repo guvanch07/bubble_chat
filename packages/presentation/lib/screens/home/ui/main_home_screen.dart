@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
     final pages = [
       const MessagesPage(),
       const NotificationsPage(),
-      CallsPage(logout: bloc.logout),
+      CallsPage(),
       const ContactsPage(),
     ];
     return Scaffold(
