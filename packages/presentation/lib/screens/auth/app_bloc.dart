@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:domain/core/enums/current_view.dart';
 import 'package:flutter/foundation.dart';
+import 'package:presentation/base/bloc_state.dart';
 import 'package:presentation/screens/auth/bloc/auth_bloc.dart';
 import 'package:presentation/screens/auth/bloc/auth_data.dart';
 import 'package:presentation/screens/auth/bloc/auth_error.dart';
@@ -13,7 +14,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:domain/models/contact.dart';
 
 @immutable
-class AppBloc {
+class AppBloc implements Bloc {
   final AuthBloc _authBloc;
   final ViewsBloc _viewsBloc;
   final CreateUserBloc _createUserBloc;
@@ -67,7 +68,7 @@ class AppBloc {
       userIdChanges: userIdChanges,
     );
   }
-
+  @override
   void dispose() {
     _authBloc.dispose();
     _viewsBloc.dispose();

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:presentation/base/bloc_state.dart';
 import 'package:presentation/core/theme/theme.dart';
 import 'package:presentation/screens/auth/app_bloc.dart';
 import 'package:presentation/screens/auth/bloc/auth_error.dart';
@@ -10,7 +11,6 @@ import 'package:presentation/screens/home/ui/main_home_screen.dart';
 import 'package:presentation/widgets/dialogs/auth_error_dialog.dart';
 import 'package:presentation/widgets/loading/loading_screen.dart';
 import 'package:domain/core/enums/current_view.dart';
-import 'package:get_it/get_it.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -33,20 +33,19 @@ class MainAppPage extends StatefulWidget {
   State<MainAppPage> createState() => _MainAppPageState();
 }
 
-class _MainAppPageState extends State<MainAppPage> {
-  late final AppBloc appBloc;
+class _MainAppPageState extends BlocState<MainAppPage, AppBloc> {
   StreamSubscription<AuthError?>? _authErrorSub;
   StreamSubscription<bool>? _isLoadingSub;
 
   @override
   void initState() {
     super.initState();
-    appBloc = GetIt.I.get<AppBloc>();
+    bloc;
   }
 
   @override
   void dispose() {
-    appBloc.dispose();
+    bloc.dispose();
     _authErrorSub?.cancel();
     _isLoadingSub?.cancel();
     super.dispose();
@@ -54,7 +53,7 @@ class _MainAppPageState extends State<MainAppPage> {
 
   void handleAuthErrors(BuildContext context) async {
     await _authErrorSub?.cancel();
-    _authErrorSub = appBloc.authError.listen((event) {
+    _authErrorSub = bloc.authError.listen((event) {
       final AuthError? authError = event;
       if (authError == null) {
         return;
@@ -68,7 +67,7 @@ class _MainAppPageState extends State<MainAppPage> {
 
   void setupLoadingScreen(BuildContext context) async {
     await _isLoadingSub?.cancel();
-    _isLoadingSub = appBloc.isLoading.listen((isLoading) {
+    _isLoadingSub = bloc.isLoading.listen((isLoading) {
       if (isLoading) {
         LoadingScreen.instance().show(
           context: context,
@@ -82,7 +81,7 @@ class _MainAppPageState extends State<MainAppPage> {
 
   Widget getHomePage() {
     return StreamBuilder<CurrentView>(
-      stream: appBloc.currentView,
+      stream: bloc.currentView,
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
@@ -96,17 +95,17 @@ class _MainAppPageState extends State<MainAppPage> {
             switch (currentView) {
               case CurrentView.login:
                 return LoginView(
-                  login: appBloc.login,
-                  goToRegisterView: appBloc.goToRegisterView,
+                  login: bloc.login,
+                  goToRegisterView: bloc.goToRegisterView,
                 );
               case CurrentView.register:
                 return RegisterView(
-                  register: appBloc.register,
-                  goToLoginView: appBloc.goToLoginView,
+                  register: bloc.register,
+                  goToLoginView: bloc.goToLoginView,
                 );
 
               case CurrentView.home:
-                return HomeScreen(bloc: appBloc);
+                return HomeScreen(bloc: bloc);
               case CurrentView.createContact:
                 return Container(
                   color: Colors.amber,
