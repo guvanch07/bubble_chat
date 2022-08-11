@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final pages = [
       const MessagesPage(),
-      const NotificationsPage(),
+      const UploadingImage(),
       CallsPage(),
       const ContactsPage(),
     ];

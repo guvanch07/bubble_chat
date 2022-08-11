@@ -87,7 +87,8 @@ class _CustomBottomSheet extends HookWidget {
                     lastName,
                     phoneNumber,
                   );
-                  goBack();
+                  Navigator.pop(context);
+                  //goBack();
                 },
                 child: const Text(
                   'Save Contact',
