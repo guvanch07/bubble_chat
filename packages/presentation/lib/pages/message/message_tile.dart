@@ -83,10 +83,6 @@ class _MessageTile extends StatelessWidget {
                     const SizedBox(height: 8),
                     IconAvatar(
                       color: AppColors.accent,
-                      child: const Text(
-                        "1",
-                        style: TextStyle(fontSize: 10, color: Colors.white),
-                      ),
                       icon: const Text(
                         "",
                       ),
@@ -94,6 +90,10 @@ class _MessageTile extends StatelessWidget {
                       onPressed: () {},
                       margin: 1,
                       radius: 18,
+                      child: const Text(
+                        "1",
+                        style: TextStyle(fontSize: 10, color: Colors.white),
+                      ),
                     )
                   ],
                 ),

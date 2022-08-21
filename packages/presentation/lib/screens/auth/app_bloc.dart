@@ -52,6 +52,8 @@ class AppBloc implements Bloc {
       viewsBloc.currentView,
     ]);
 
+    
+
     // isLoading
 
     final Stream<bool> isLoading = Rx.merge([

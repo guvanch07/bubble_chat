@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:presentation/base/bloc_state.dart';
 import 'package:presentation/core/heplers/extensions.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:domain/models/contact.dart';
@@ -8,7 +10,18 @@ import 'package:domain/models/contact.dart';
 typedef _Snapshots = QuerySnapshot<Map<String, dynamic>>;
 typedef _Document = DocumentReference<Map<String, dynamic>>;
 
-class CreateUserBloc {
+
+abstract class ImagePickerBase{
+  factory ImagePickerBase() => _ImagePickerBase();
+}
+
+class _ImagePickerBase implements ImagePickerBase{
+
+
+}
+
+
+class ImagePickerBloc implements Bloc {
   final Sink<String?> userId;
   final Sink<Contact> createContact;
   final Sink<Contact> deleteContact;
@@ -18,6 +31,7 @@ class CreateUserBloc {
   final StreamSubscription<void> _deleteContactSubscription;
   final StreamSubscription<void> _deleteAllContactsSubscription;
 
+@override
   void dispose() {
     userId.close();
     createContact.close();
@@ -28,7 +42,7 @@ class CreateUserBloc {
     _deleteAllContactsSubscription.cancel();
   }
 
-  const CreateUserBloc._({
+  const ImagePickerBloc._({
     required this.userId,
     required this.createContact,
     required this.deleteContact,
@@ -41,9 +55,12 @@ class CreateUserBloc {
         _deleteContactSubscription = deleteContactSubscription,
         _deleteAllContactsSubscription = deleteAllContactsSubscription;
 
-  factory CreateUserBloc() {
+  factory ImagePickerBloc() {
     final backend = FirebaseFirestore.instance;
+    final storage = FirebaseStorage.instance;
 
+    ///
+    
     // user id
     final userId = BehaviorSubject<String?>();
 
@@ -99,7 +116,7 @@ class CreateUserBloc {
                 collection.docs.map((doc) => doc.reference.delete())))
             .listen((_) {});
 
-    return CreateUserBloc._(
+    return ImagePickerBloc._(
       userId: userId,
       createContact: createContact,
       deleteContact: deleteContact,

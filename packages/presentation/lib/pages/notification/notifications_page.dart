@@ -56,7 +56,7 @@ class _UploadingImageState extends State<UploadingImage> {
 
   // Retriew the uploaded images
   // This function is called when the app launches for the first time or when an image is uploaded or deleted
-  Future<List<Map<String, dynamic>>> _loadImages() async {
+  Stream<List<Map<String, dynamic>>> _loadImages() async* {
     List<Map<String, dynamic>> files = [];
 
     final ListResult result = await storage.ref().list();
@@ -74,7 +74,7 @@ class _UploadingImageState extends State<UploadingImage> {
       });
     });
 
-    return files;
+    yield files;
   }
 
   // Delete the selected image
@@ -105,8 +105,8 @@ class _UploadingImageState extends State<UploadingImage> {
             ],
           ),
           Expanded(
-            child: FutureBuilder(
-              future: _loadImages(),
+            child: StreamBuilder(
+              stream: _loadImages(),
               builder: (context,
                   AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {

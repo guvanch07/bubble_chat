@@ -11,7 +11,6 @@ import 'package:presentation/screens/chat/ui/main_chat_screen.dart';
 import 'package:presentation/screens/story/main_story.dart';
 import 'package:presentation/widgets/avatar.dart';
 import 'package:presentation/widgets/icon_avatar.dart';
-import 'package:collection/algorithms.dart';
 
 part 'stories_widget.dart';
 part 'message_tile.dart';
