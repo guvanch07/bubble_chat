@@ -4,12 +4,12 @@ part of '../main_home_screen.dart';
 class _CustomBottomSheet extends HookWidget {
   const _CustomBottomSheet({
     Key? key,
-    required this.createContact,
-    required this.goBack,
+    // required this.createContact,
+    // required this.goBack,
   }) : super(key: key);
 
-  final CreateContactCallback createContact;
-  final VoidCallback goBack;
+  // final CreateContactCallback createContact;
+  // final VoidCallback goBack;
 
   @override
   Widget build(BuildContext context) {
@@ -79,14 +79,14 @@ class _CustomBottomSheet extends HookWidget {
               ),
               TextButton(
                 onPressed: () {
-                  final firstName = firstNameController.text;
-                  final lastName = lastNameController.text;
-                  final phoneNumber = phoneNumberController.text;
-                  createContact(
-                    firstName,
-                    lastName,
-                    phoneNumber,
-                  );
+                  // final firstName = firstNameController.text;
+                  // final lastName = lastNameController.text;
+                  // final phoneNumber = phoneNumberController.text;
+                  // createContact(
+                  //   firstName,
+                  //   lastName,
+                  //   phoneNumber,
+                  // );
                   Navigator.pop(context);
                   //goBack();
                 },

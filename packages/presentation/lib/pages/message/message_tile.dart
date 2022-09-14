@@ -1,18 +1,19 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'main_messages_page.dart';
 
 class _MessageTile extends StatelessWidget {
   const _MessageTile({
     Key? key,
-    required this.messageData,
+    required this.faker,
   }) : super(key: key);
 
-  final MessageData messageData;
+  final Faker faker;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(ChatScreen.route(messageData));
+        //Navigator.of(context).push(ChatScreen.route(messageData));
       },
       child: Container(
         height: 100,
@@ -31,7 +32,7 @@ class _MessageTile extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Avatar(url: messageData.profilePicture, radius: 50),
+                child: Avatar(url: faker.image.image(), radius: 50),
               ),
               Expanded(
                 child: Column(
@@ -41,7 +42,7 @@ class _MessageTile extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: Text(
-                        messageData.senderName,
+                        faker.person.name(),
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           letterSpacing: 0.2,
@@ -53,7 +54,7 @@ class _MessageTile extends StatelessWidget {
                     SizedBox(
                       height: 20,
                       child: Text(
-                        messageData.message,
+                        faker.address.city(),
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontSize: 12,
@@ -71,9 +72,9 @@ class _MessageTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     const SizedBox(height: 4),
-                    Text(
-                      messageData.dateMessage.toUpperCase(),
-                      style: const TextStyle(
+                    const Text(
+                      "23.59",
+                      style: TextStyle(
                         fontSize: 11,
                         letterSpacing: -0.2,
                         fontWeight: FontWeight.w600,

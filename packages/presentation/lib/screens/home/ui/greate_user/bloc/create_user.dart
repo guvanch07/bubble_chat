@@ -11,9 +11,11 @@ typedef _Document = DocumentReference<Map<String, dynamic>>;
 class CreateUserBloc {
   final Sink<String?> userId;
   final Sink<Contact> createContact;
+  final Sink<Contact> createUser;
   final Sink<Contact> deleteContact;
   final Sink<void> deleteAllContacts;
   final Stream<Iterable<Contact>> contacts;
+  final StreamSubscription<void> _createUserSubscription;
   final StreamSubscription<void> _createContactSubscription;
   final StreamSubscription<void> _deleteContactSubscription;
   final StreamSubscription<void> _deleteAllContactsSubscription;
@@ -26,20 +28,24 @@ class CreateUserBloc {
     _createContactSubscription.cancel();
     _deleteContactSubscription.cancel();
     _deleteAllContactsSubscription.cancel();
+    _createUserSubscription.cancel();
   }
 
   const CreateUserBloc._({
+    required this.createUser,
     required this.userId,
     required this.createContact,
     required this.deleteContact,
     required this.contacts,
     required this.deleteAllContacts,
+    required StreamSubscription<void> createUserSubscription,
     required StreamSubscription<void> createContactSubscription,
     required StreamSubscription<void> deleteContactSubscription,
     required StreamSubscription<void> deleteAllContactsSubscription,
   })  : _createContactSubscription = createContactSubscription,
         _deleteContactSubscription = deleteContactSubscription,
-        _deleteAllContactsSubscription = deleteAllContactsSubscription;
+        _deleteAllContactsSubscription = deleteAllContactsSubscription,
+        _createUserSubscription = createUserSubscription;
 
   factory CreateUserBloc() {
     final backend = FirebaseFirestore.instance;
@@ -62,6 +68,16 @@ class CreateUserBloc {
         );
       }
     });
+
+    /// write user to db
+
+    final writeToDb = BehaviorSubject<Contact>();
+    final StreamSubscription<void> createUserToDb = writeToDb
+        .switchMap((Contact value) => userId
+            .take(1)
+            .unwrap()
+            .asyncMap((userId) => backend.collection(userId).add(value.data)))
+        .listen((event) {});
 
     // create contact
 
@@ -108,6 +124,8 @@ class CreateUserBloc {
       createContactSubscription: createContactSubscription,
       deleteContactSubscription: deleteContactSubscription,
       deleteAllContactsSubscription: deleteAllContactsSubscription,
+      createUser: writeToDb,
+      createUserSubscription: createUserToDb,
     );
   }
 }

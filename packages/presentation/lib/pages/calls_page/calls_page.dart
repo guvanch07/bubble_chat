@@ -10,7 +10,7 @@ import 'package:presentation/screens/chat/ui/main_chat_screen.dart';
 import 'package:presentation/widgets/dialogs/generic_dialog.dart';
 import 'package:domain/models/message_data.dart';
 
-class CallsPage extends BlocStateless<AppBloc> {
+class CallsPage extends BlocStatelessSimple<AppBloc> {
   CallsPage({
     Key? key,
   }) : super(key: key);

@@ -43,12 +43,12 @@ class AuthBloc {
     required this.deleteAccount,
   });
 
-  factory AuthBloc() {
+  factory AuthBloc(FirebaseAuth firebaseAuth) {
     final isLoading = BehaviorSubject<bool>();
 
     // calculate auth status
     final Stream<AuthStatus> authStatus =
-        FirebaseAuth.instance.authStateChanges().map((user) {
+        firebaseAuth.authStateChanges().map((user) {
       if (user != null) {
         return const AuthStatusLoggedIn();
       } else {
@@ -56,11 +56,15 @@ class AuthBloc {
       }
     });
 
+    // Future<void> writeUser() async {
+    //   await writeUserUseCase(firebaseAuth.currentUser);
+    // }
+
     // get the user-id
-    final Stream<String?> userId = FirebaseAuth.instance
+    final Stream<String?> userId = firebaseAuth
         .authStateChanges()
         .map((user) => user?.uid)
-        .startWith(FirebaseAuth.instance.currentUser?.uid);
+        .startWith(firebaseAuth.currentUser?.uid);
 
     // login + error handling
     final login = BehaviorSubject<LoginCommand>();
@@ -69,7 +73,7 @@ class AuthBloc {
         .setLoadingTo(true, onSink: isLoading)
         .asyncMap<AuthError?>((loginCommand) async {
       try {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
+        await firebaseAuth.signInWithEmailAndPassword(
           email: loginCommand.email,
           password: loginCommand.password,
         );
@@ -88,7 +92,7 @@ class AuthBloc {
         .setLoadingTo(true, onSink: isLoading)
         .asyncMap<AuthError?>((registerCommand) async {
       try {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        await firebaseAuth.createUserWithEmailAndPassword(
           email: registerCommand.email,
           password: registerCommand.password,
         );
@@ -106,7 +110,7 @@ class AuthBloc {
         .setLoadingTo(true, onSink: isLoading)
         .asyncMap<AuthError?>((_) async {
       try {
-        await FirebaseAuth.instance.signOut();
+        await firebaseAuth.signOut();
         return null;
       } on FirebaseAuthException catch (e) {
         return AuthError.from(e);
@@ -122,7 +126,7 @@ class AuthBloc {
     final Stream<AuthError?> deleteAccountError =
         deleteAccount.setLoadingTo(true, onSink: isLoading).asyncMap((_) async {
       try {
-        await FirebaseAuth.instance.currentUser?.delete();
+        await firebaseAuth.currentUser?.delete();
         return null;
       } on FirebaseAuthException catch (e) {
         return AuthError.from(e);

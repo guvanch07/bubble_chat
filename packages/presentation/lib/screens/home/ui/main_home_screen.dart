@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:domain/core/helpers/debugging.dart';
-import 'package:domain/core/typedefs/login_type.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -10,7 +9,7 @@ import 'package:presentation/pages/calls_page/calls_page.dart';
 import 'package:presentation/pages/contact_page/contacts_page.dart';
 import 'package:presentation/pages/message/main_messages_page.dart';
 import 'package:presentation/pages/notification/notifications_page.dart';
-import 'package:presentation/screens/auth/app_bloc.dart';
+import 'package:presentation/services/auth_bloc.dart';
 import 'package:presentation/widgets/animated_icon.dart';
 import 'package:presentation/widgets/avatar.dart';
 import 'package:presentation/widgets/icon_avatar.dart';
@@ -24,7 +23,7 @@ class HomeScreen extends StatelessWidget {
     required this.bloc,
   }) : super(key: key);
 
-  final AppBloc bloc;
+  final AuthNewBloc bloc;
 
   final ValueNotifier<int> pageIndex = ValueNotifier(0);
   final ValueNotifier<String> title = ValueNotifier('Messages');
@@ -79,9 +78,10 @@ class HomeScreen extends StatelessWidget {
             onPressed: () => showModalBottomSheet(
                 backgroundColor: Colors.transparent,
                 context: context,
-                builder: (context) => _CustomBottomSheet(
-                    createContact: bloc.createContact,
-                    goBack: bloc.goToContactListView)),
+                builder: (context) => const _CustomBottomSheet(
+                    // createContact: bloc.createContact,
+                    // goBack: bloc.goToContactListView
+                    )),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),

@@ -13,6 +13,8 @@ dependencies:
     sdk: flutter
   domain:
     path: ../domain
+  shared_preferences: ^2.0.15
+  google_sign_in: ^5.4.1
 
 
 dev_dependencies:

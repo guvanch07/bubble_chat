@@ -12,6 +12,7 @@ import 'package:presentation/screens/auth/current_bloc.dart';
 import 'package:presentation/screens/home/ui/greate_user/bloc/create_user.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:domain/models/contact.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 @immutable
 class AppBloc implements Bloc {
@@ -24,9 +25,12 @@ class AppBloc implements Bloc {
   final Stream<AuthError?> authError;
   final StreamSubscription<String?> _userIdChanges;
 
-  factory AppBloc() {
-    final authBloc = AuthBloc();
+  factory AppBloc(
+    FirebaseAuth firebaseAuth,
+  ) {
+    final authBloc = AuthBloc(firebaseAuth);
     final viewsBloc = ViewsBloc();
+
     final contactsBloc = CreateUserBloc();
 
     // pass userid from auth bloc into the contacts bloc
@@ -51,8 +55,6 @@ class AppBloc implements Bloc {
       currentViewBasedOnAuthStatus,
       viewsBloc.currentView,
     ]);
-
-    
 
     // isLoading
 

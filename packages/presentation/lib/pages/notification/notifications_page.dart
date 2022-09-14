@@ -56,21 +56,22 @@ class _UploadingImageState extends State<UploadingImage> {
 
   // Retriew the uploaded images
   // This function is called when the app launches for the first time or when an image is uploaded or deleted
-  Stream<List<Map<String, dynamic>>> _loadImages() async* {
-    List<Map<String, dynamic>> files = [];
+  Stream<Map<String, dynamic>> _loadImages() async* {
+    Map<String, dynamic> files = {}; // list
 
     final ListResult result = await storage.ref().list();
     final List<Reference> allFiles = result.items;
 
     await Future.forEach<Reference>(allFiles, (file) async {
       final String fileUrl = await file.getDownloadURL();
-      final FullMetadata fileMeta = await file.getMetadata();
-      files.add({
+      //final FullMetadata fileMeta = await file.getMetadata();
+      files.addAll({
+        // list add
         "url": fileUrl,
         "path": file.fullPath,
-        "uploaded_by": fileMeta.customMetadata?['uploaded_by'] ?? 'Nobody',
-        "description":
-            fileMeta.customMetadata?['description'] ?? 'No description'
+        //"uploaded_by": fileMeta.customMetadata?['uploaded_by'] ?? 'Nobody',
+        // "description":
+        //     fileMeta.customMetadata?['description'] ?? 'No description'
       });
     });
 
@@ -107,8 +108,7 @@ class _UploadingImageState extends State<UploadingImage> {
           Expanded(
             child: StreamBuilder(
               stream: _loadImages(),
-              builder: (context,
-                  AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+              builder: (context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   return ListView.builder(
                     itemCount: snapshot.data?.length ?? 0,
