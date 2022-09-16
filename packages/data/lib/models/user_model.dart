@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:domain/models/entities/user_entity.dart';
+import 'package:domain/entities/user_entity.dart';
 
 class UserModel extends UserEntity {
   const UserModel({

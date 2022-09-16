@@ -5,13 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:presentation/base/bloc_state.dart';
 import 'package:presentation/core/heplers/random.dart';
-import 'package:presentation/screens/auth/app_bloc.dart';
 import 'package:presentation/screens/chat/ui/main_chat_screen.dart';
 import 'package:presentation/widgets/dialogs/generic_dialog.dart';
 import 'package:domain/models/message_data.dart';
 
-class CallsPage extends BlocStatelessSimple<AppBloc> {
-  CallsPage({
+class CallsPage extends StatelessWidget {
+  const CallsPage({
     Key? key,
   }) : super(key: key);
 
@@ -27,34 +26,7 @@ class CallsPage extends BlocStatelessSimple<AppBloc> {
       dateMessage: Jiffy(date).fromNow(),
       profilePicture: Helpers.randomPictureUrl(),
     );
-    return StreamBuilder<Iterable<Contact>>(
-        stream: bloc.contacts,
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-            case ConnectionState.waiting:
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            case ConnectionState.active:
-            case ConnectionState.done:
-              final contacts = snapshot.requireData;
-              return ListView.builder(
-                itemCount: contacts.length,
-                itemBuilder: (context, index) {
-                  final contact = contacts.elementAt(index);
-                  return ContactListTile(
-                    contact: contact,
-                    deleteContact: bloc.deleteContact,
-                    showDetils: () => Navigator.of(context)
-                        .push(ChatScreen.route(msg)), //todo
-                  );
-                },
-              );
-          }
-
-          // return
-        });
+    return Container();
   }
 }
 

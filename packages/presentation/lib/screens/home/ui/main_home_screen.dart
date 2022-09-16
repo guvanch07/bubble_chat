@@ -9,7 +9,7 @@ import 'package:presentation/pages/calls_page/calls_page.dart';
 import 'package:presentation/pages/contact_page/contacts_page.dart';
 import 'package:presentation/pages/message/main_messages_page.dart';
 import 'package:presentation/pages/notification/notifications_page.dart';
-import 'package:presentation/services/auth_bloc.dart';
+
 import 'package:presentation/widgets/animated_icon.dart';
 import 'package:presentation/widgets/avatar.dart';
 import 'package:presentation/widgets/icon_avatar.dart';
@@ -20,10 +20,7 @@ part 'nav_bar_widget.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({
     Key? key,
-    required this.bloc,
   }) : super(key: key);
-
-  final AuthNewBloc bloc;
 
   final ValueNotifier<int> pageIndex = ValueNotifier(0);
   final ValueNotifier<String> title = ValueNotifier('Messages');
@@ -45,7 +42,7 @@ class HomeScreen extends StatelessWidget {
     final pages = [
       const MessagesPage(),
       const UploadingImage(),
-      CallsPage(),
+      const CallsPage(),
       const ContactsPage(),
     ];
     return Scaffold(

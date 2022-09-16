@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:domain/models/entities/group_entity.dart';
+import 'package:domain/entities/group_entity.dart';
 
 class GroupModel extends GroupEntity {
   const GroupModel({

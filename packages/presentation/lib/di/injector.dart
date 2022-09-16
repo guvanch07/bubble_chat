@@ -1,16 +1,26 @@
 import 'package:get_it/get_it.dart';
-import 'package:presentation/pages/message/bloc/bloc.dart';
-import 'package:presentation/screens/auth/app_bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:presentation/services/auth_bloc.dart';
+import 'package:presentation/screens/auth/auth/auth_cubit.dart';
+import 'package:presentation/screens/auth/credential_cubit/credential_cubit.dart';
 
 Future<void> injectPresentationModeule(GetIt sl) async {
   /// servicees
 
   /// blocs
-  sl.registerFactory<AppBloc>(
-    () => AppBloc(
-      sl.get<FirebaseAuth>(),
+  sl.registerFactory<AuthCubit>(
+    () => AuthCubit(
+      isSignInUseCase: sl.get(),
+      signOutUseCase: sl.get(),
+      getCurrentUIDUseCase: sl.get(),
+    ),
+  );
+
+  sl.registerFactory<CredentialCubit>(
+    () => CredentialCubit(
+      forgotPasswordUseCase: sl.get(),
+      getCreateCurrentUserUseCase: sl.get(),
+      googleSignInUseCase: sl.get(),
+      signInUseCase: sl.get(),
+      signUpUseCase: sl.get(),
     ),
   );
 }

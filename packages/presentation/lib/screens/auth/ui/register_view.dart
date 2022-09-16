@@ -1,26 +1,74 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:domain/core/helpers/debugging.dart';
-import 'package:domain/core/typedefs/login_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:presentation/services/auth_bloc.dart';
+import 'dart:developer';
 
-class RegisterView extends HookWidget {
-  final AuthNewBloc bloc;
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:presentation/screens/auth/auth/auth_cubit.dart';
+import 'package:presentation/screens/auth/credential_cubit/credential_cubit.dart';
+import 'package:presentation/screens/home/ui/main_home_screen.dart';
+import 'package:domain/entities/user_entity.dart';
 
-  const RegisterView({
+class LoginView extends StatelessWidget {
+  const LoginView({
     Key? key,
-    required this.bloc,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Log in',
+        ),
+      ),
+      body: BlocConsumer<CredentialCubit, CredentialState>(
+        listener: (context, state) {
+          if (state is CredentialSuccess) {
+            BlocProvider.of<AuthCubit>(context).loggedIn();
+          }
+          if (state is CredentialFailure) {
+            log('error');
+          }
+        },
+        builder: (context, state) {
+          if (state is CredentialLoading) {
+            return const Center(child: CircularProgressIndicator.adaptive());
+          }
+
+          if (state is CredentialSuccess) {
+            return BlocBuilder<AuthCubit, AuthState>(
+                builder: (context, authState) {
+              log('authSate');
+              if (authState is Authenticated) {
+                log('Authenticated');
+                return HomeScreen();
+              } else {
+                return const RegiterBuilder();
+              }
+            });
+          }
+
+          return const RegiterBuilder();
+        },
+      ),
+    );
+  }
+}
+
+class RegiterBuilder extends HookWidget {
+  const RegiterBuilder({
+    Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final emailController = useTextEditingController(
-      text: 'vandad.np@gmail.com'.ifDebugging,
+      text: 'guvanchamanov777@gmail.com'.ifDebugging,
     );
 
     final passwordController = useTextEditingController(
-      text: 'foobarbaz'.ifDebugging,
+      text: '123456'.ifDebugging,
     );
 
     return Scaffold(
@@ -52,11 +100,20 @@ class RegisterView extends HookWidget {
             ),
             TextButton(
               onPressed: () {
-                final email = emailController.text;
-                final password = passwordController.text;
-                bloc.registerPage(
-                  email,
-                  password,
+                if (emailController.text.isEmpty) return;
+                if (passwordController.text.isEmpty) return;
+                BlocProvider.of<CredentialCubit>(context).signUpSubmit(
+                  user: UserEntity(
+                    email: emailController.text,
+                    phoneNumber: '',
+                    name: emailController.text.split('@').join(),
+                    profileUrl: '',
+                    gender: '',
+                    dob: '',
+                    password: passwordController.text,
+                    isOnline: false,
+                    status: "Hi! there i'm using this app",
+                  ),
                 );
               },
               child: const Text(
@@ -70,7 +127,7 @@ class RegisterView extends HookWidget {
               ),
             ),
             IconButton(
-                onPressed: () => bloc.signInWithGoogle(),
+                onPressed: () {},
                 icon: const Icon(Icons.image_aspect_ratio_sharp))
           ],
         ),

@@ -1,8 +1,8 @@
-import 'package:domain/models/entities/engage_user_entity.dart';
-import 'package:domain/models/entities/group_entity.dart';
-import 'package:domain/models/entities/my_chat_entity.dart';
-import 'package:domain/models/entities/text_messsage_entity.dart';
-import 'package:domain/models/entities/user_entity.dart';
+import 'package:domain/entities/group_entity.dart';
+import 'package:domain/entities/engage_user_entity.dart';
+import 'package:domain/entities/my_chat_entity.dart';
+import 'package:domain/entities/text_messsage_entity.dart';
+import 'package:domain/entities/user_entity.dart';
 import 'package:domain/repository/base_repository.dart';
 
 abstract class IChatRepository implements BaseRepository {
