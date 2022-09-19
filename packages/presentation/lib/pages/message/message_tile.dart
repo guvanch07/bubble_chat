@@ -1,4 +1,3 @@
-
 part of 'main_messages_page.dart';
 
 class _MessageTile extends StatelessWidget {
@@ -13,7 +12,7 @@ class _MessageTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(ChatScreen.route(messageData));
+        Navigator.of(context).push(ChatScreen.route(data: messageData));
       },
       child: Container(
         height: 100,

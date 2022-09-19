@@ -39,17 +39,15 @@ class LoginView extends StatelessWidget {
           if (state is CredentialSuccess) {
             return BlocBuilder<AuthCubit, AuthState>(
                 builder: (context, authState) {
-              log('authSate');
               if (authState is Authenticated) {
-                log('Authenticated');
-                return HomeScreen();
+                return HomeScreen(uid: authState.uid);
               } else {
                 return const LoginBuilder();
               }
             });
           }
 
-          return const SizedBox();
+          return const LoginBuilder();
         },
       ),
     );

@@ -14,7 +14,7 @@ abstract class IChatRepository implements BaseRepository {
   Stream<List<GroupEntity>> getGroups();
   Future<void> joinGroup(GroupEntity groupEntity);
   Future<void> updateGroup(GroupEntity groupEntity);
-
+  Stream<List<UserEntity>> getAllChatedUsers();
   Future<bool> isSignIn();
   Future<void> signIn(UserEntity user);
   Future<void> signUp(UserEntity user);

@@ -1,7 +1,14 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of "main_chat_screen.dart";
 
 class _ActionBar extends StatelessWidget {
-  const _ActionBar({Key? key}) : super(key: key);
+  const _ActionBar({
+    Key? key,
+    required this.uid,
+    required this.otherUid,
+  }) : super(key: key);
+  final String? uid;
+  final String? otherUid;
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +25,24 @@ class _ActionBar extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: IconAvatar(
-                color: AppColors.accent,
-                icon: const Icon(CupertinoIcons.mic_fill, size: 25),
-                iconColor: AppColors.textLigth,
-                onPressed: () {},
-                radius: 60),
+            child: IconButton(
+              color: AppColors.accent,
+              icon: const Icon(CupertinoIcons.mic_fill, size: 25),
+              onPressed: () {
+                BlocProvider.of<UserCubit>(context).createOneToOneChatChannel(
+                    user: EngageUserEntity(
+                  uid: uid,
+                  otherUid: otherUid,
+                ));
+                BlocProvider.of<UserCubit>(context).addToMyChat(MyChatEntity(
+                  senderUID: uid,
+                  recipientUID: otherUid,
+                  senderName: "fdf",
+                  recipientName: 'sdsd',
+                ));
+                log('pressed');
+              },
+            ),
           )
         ],
       ),

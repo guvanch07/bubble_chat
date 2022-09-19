@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:presentation/core/theme/theme.dart';
+import 'package:presentation/pages/contact_page/cubit/user_cubit.dart';
+import 'package:presentation/pages/message/cubit/messages_cubit.dart';
 import 'package:presentation/screens/auth/auth/auth_cubit.dart';
 import 'package:presentation/screens/auth/credential_cubit/credential_cubit.dart';
 import 'package:presentation/screens/auth/ui/login_view.dart';
@@ -15,9 +17,11 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => GetIt.I.get<AuthCubit>()..appStarted(),
-        ),
-        BlocProvider(create: (context) => GetIt.I.get<CredentialCubit>())
+            create: (context) => GetIt.I.get<AuthCubit>()..appStarted()),
+        BlocProvider(create: (context) => GetIt.I.get<CredentialCubit>()),
+        BlocProvider(create: (context) => GetIt.I.get<UserCubit>()..getUsers()),
+        BlocProvider(
+            create: (context) => GetIt.I.get<MessagesCubit>()..getUsers()),
       ],
       child: MaterialApp(
         theme: AppTheme.light(),
@@ -27,7 +31,7 @@ class MyApp extends StatelessWidget {
         home: BlocBuilder<AuthCubit, AuthState>(
           builder: (context, authState) {
             if (authState is Authenticated) {
-              return HomeScreen();
+              return HomeScreen(uid: authState.uid);
             } else {
               return const LoginView();
             }

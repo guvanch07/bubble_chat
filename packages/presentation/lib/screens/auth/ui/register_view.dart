@@ -42,7 +42,7 @@ class LoginView extends StatelessWidget {
               log('authSate');
               if (authState is Authenticated) {
                 log('Authenticated');
-                return HomeScreen();
+                return HomeScreen(uid: authState.uid);
               } else {
                 return const RegiterBuilder();
               }

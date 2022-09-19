@@ -1,10 +1,17 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
+import 'package:domain/entities/engage_user_entity.dart';
+import 'package:domain/models/message_data.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:presentation/core/theme/theme.dart';
-import 'package:domain/models/message_data.dart';
+import 'package:presentation/pages/contact_page/cubit/user_cubit.dart';
 import 'package:presentation/widgets/avatar.dart';
 import 'package:presentation/widgets/icon_avatar.dart';
 import 'package:presentation/widgets/text_field.dart';
+import 'package:domain/entities/my_chat_entity.dart';
 
 part 'action_button.dart';
 part 'app_bar_title.dart';
@@ -12,18 +19,26 @@ part 'date_label.dart';
 part 'message_list.dart';
 
 class ChatScreen extends StatelessWidget {
-  static Route route(MessageData data) => MaterialPageRoute(
+  static Route route(
+          {required MessageData data, String? uid, String? otherUid}) =>
+      MaterialPageRoute(
         builder: (context) => ChatScreen(
           messageData: data,
+          uid: uid,
+          otherUid: otherUid,
         ),
       );
 
   const ChatScreen({
     Key? key,
     required this.messageData,
+    this.uid,
+    this.otherUid,
   }) : super(key: key);
 
   final MessageData messageData;
+  final String? uid;
+  final String? otherUid;
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +63,12 @@ class ChatScreen extends StatelessWidget {
           title: _AppBarTitle(messageData: messageData),
           actions: _actions),
       body: Column(
-        children: const [
-          _DemoMessageList(),
-          _ActionBar(),
+        children: [
+          const _DemoMessageList(),
+          _ActionBar(
+            otherUid: otherUid,
+            uid: uid,
+          ),
         ],
       ),
     );

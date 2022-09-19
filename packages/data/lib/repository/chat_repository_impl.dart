@@ -126,6 +126,16 @@ class ChatRepository implements IChatRepository {
   }
 
   @override
+  Stream<List<UserEntity>> getAllChatedUsers() {
+    final userCollection = fireStore
+        .collection("users")
+        .doc(auth.currentUser?.uid)
+        .collection('chatChannel');
+    return userCollection.snapshots().map((querySnapshot) =>
+        querySnapshot.docs.map((e) => UserModel.fromSnapshot(e)).toList());
+  }
+
+  @override
   Future<String> createOneToOneChatChannel(
       EngageUserEntity engageUserEntity) async {
     //User Collection Reference
@@ -169,7 +179,7 @@ class ChatRepository implements IChatRepository {
 
       return chatChannelId;
     });
-    return Future.value("");
+    return Future.value("added");
   }
 
   @override
@@ -219,6 +229,8 @@ class ChatRepository implements IChatRepository {
         .collection("users")
         .doc(myChatEntity.recipientUID)
         .collection("myChat");
+
+    //final channelId = await createOneToOneChatChannel();
 
     final myNewChatCurrentUser = MyChatModel(
       channelId: myChatEntity.channelId,

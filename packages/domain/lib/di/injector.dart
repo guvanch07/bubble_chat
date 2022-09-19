@@ -1,8 +1,11 @@
+import 'package:domain/use_cases/add_to_my_chat_usecase.dart';
 import 'package:domain/use_cases/create_group_usecase.dart';
+import 'package:domain/use_cases/create_one_to_one_chat_channel_usecase.dart';
 import 'package:domain/use_cases/forgot_password_usecase.dart';
 import 'package:domain/use_cases/get_all_group_usecase.dart';
 import 'package:domain/use_cases/get_all_users_usecase.dart';
 import 'package:domain/use_cases/get_create_current_user_usecase.dart';
+import 'package:domain/use_cases/get_created_one_to_one_users.dart';
 import 'package:domain/use_cases/get_current_uid_usecase.dart';
 import 'package:domain/use_cases/get_messages_usecase.dart';
 import 'package:domain/use_cases/get_update_user_usecase.dart';
@@ -52,4 +55,12 @@ Future<void> injectDomainModeule(GetIt sl) async {
       () => GetMessageUseCase(repository: sl.call()));
   sl.registerLazySingleton<SendTextMessageUseCase>(
       () => SendTextMessageUseCase(repository: sl.call()));
+  sl.registerLazySingleton<CreateOneToOneChatChannelUseCase>(
+      () => CreateOneToOneChatChannelUseCase(repository: sl.call()));
+
+  sl.registerLazySingleton<GetCreatedOneToOneChatsUseCase>(
+      () => GetCreatedOneToOneChatsUseCase(repository: sl.call()));
+
+  sl.registerLazySingleton<AddToMyChatUseCase>(
+      () => AddToMyChatUseCase(repository: sl.call()));
 }
