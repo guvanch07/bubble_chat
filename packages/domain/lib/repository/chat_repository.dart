@@ -28,8 +28,8 @@ abstract class IChatRepository implements BaseRepository {
       MyChatEntity myChatEntity, List<String> selectUserList);
 
   Future<void> sendTextMessage(
-      TextMessageEntity textMessageEntity, String channelId);
-  Stream<List<TextMessageEntity>> getMessages(String channelId);
+      bool channnel, TextMessageEntity textMessageEntity, String channelId);
+  Stream<List<TextMessageEntity>> getMessages(bool channel, String channelId);
   Future<void> addToMyChat(MyChatEntity myChatEntity);
   Stream<List<MyChatEntity>> getMyChat(String uid);
 }

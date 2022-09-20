@@ -6,14 +6,14 @@ class _AppBarTitle extends StatelessWidget {
     required this.messageData,
   }) : super(key: key);
 
-  final MessageData messageData;
+  final MyChatEntity messageData;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Avatar(
-          url: messageData.profilePicture,
+          url: messageData.profileUrl ?? '',
           radius: 40,
         ),
         const SizedBox(
@@ -25,7 +25,7 @@ class _AppBarTitle extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                messageData.senderName,
+                messageData.senderName ?? '',
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(fontSize: 14),
               ),

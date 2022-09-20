@@ -8,10 +8,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:presentation/core/theme/theme.dart';
 import 'package:presentation/pages/contact_page/cubit/user_cubit.dart';
+import 'package:presentation/screens/chat/cubit/chat_messages_cubit.dart';
 import 'package:presentation/widgets/avatar.dart';
 import 'package:presentation/widgets/icon_avatar.dart';
 import 'package:presentation/widgets/text_field.dart';
 import 'package:domain/entities/my_chat_entity.dart';
+import 'package:domain/entities/text_messsage_entity.dart';
 
 part 'action_button.dart';
 part 'app_bar_title.dart';
@@ -20,10 +22,10 @@ part 'message_list.dart';
 
 class ChatScreen extends StatelessWidget {
   static Route route(
-          {required MessageData data, String? uid, String? otherUid}) =>
+          {required MyChatEntity messageData, String? uid, String? otherUid}) =>
       MaterialPageRoute(
         builder: (context) => ChatScreen(
-          messageData: data,
+          messageData: messageData,
           uid: uid,
           otherUid: otherUid,
         ),
@@ -36,7 +38,7 @@ class ChatScreen extends StatelessWidget {
     this.otherUid,
   }) : super(key: key);
 
-  final MessageData messageData;
+  final MyChatEntity messageData;
   final String? uid;
   final String? otherUid;
 

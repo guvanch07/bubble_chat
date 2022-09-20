@@ -9,9 +9,9 @@ class MessagesInitial extends MessagesState {}
 class MessagesLoading extends MessagesState {}
 
 class MessagesLoaded extends MessagesState {
-  final List<UserEntity> users;
+  final List<MyChatEntity> myChats;
   MessagesLoaded({
-    required this.users,
+    required this.myChats,
   });
 }
 

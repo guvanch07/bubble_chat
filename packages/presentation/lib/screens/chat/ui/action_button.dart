@@ -29,17 +29,21 @@ class _ActionBar extends StatelessWidget {
               color: AppColors.accent,
               icon: const Icon(CupertinoIcons.mic_fill, size: 25),
               onPressed: () {
-                BlocProvider.of<UserCubit>(context).createOneToOneChatChannel(
-                    user: EngageUserEntity(
-                  uid: uid,
-                  otherUid: otherUid,
-                ));
-                BlocProvider.of<UserCubit>(context).addToMyChat(MyChatEntity(
-                  senderUID: uid,
-                  recipientUID: otherUid,
-                  senderName: "fdf",
-                  recipientName: 'sdsd',
-                ));
+              context.read<ChatMessagesCubit>().sendTextMessage(channel: true,textMessageEntity: TextMessageEntity(),channelId: );
+                // BlocProvider.of<UserCubit>(context)
+                //     .createOneToOneChatChannel(
+                //         user: EngageUserEntity(
+                //       uid: uid,
+                //       otherUid: otherUid,
+                //     ))
+                //     .whenComplete(() => BlocProvider.of<UserCubit>(context)
+                //             .addToMyChat(MyChatEntity(
+                //           senderUID: uid,
+                //           recipientUID: otherUid,
+                //           senderName: "fdf",
+                //           recipientName: 'sdsd',
+                //         )));
+
                 log('pressed');
               },
             ),

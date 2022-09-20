@@ -138,10 +138,12 @@ class ChatRepository implements IChatRepository {
   @override
   Future<String> createOneToOneChatChannel(
       EngageUserEntity engageUserEntity) async {
+    String chatChannelId;
     //User Collection Reference
     final userCollectionRef = fireStore.collection("users");
 
     final oneToOneChatChannelRef = fireStore.collection("OneToOneChatChannel");
+
     //ChatChannelMap
     userCollectionRef
         .doc(engageUserEntity.uid)
@@ -153,13 +155,12 @@ class ChatRepository implements IChatRepository {
       if (chatChannelDoc.exists) {
         return chatChannelDoc.get('channelId');
       }
-
-      final chatChannelId = oneToOneChatChannelRef.doc().id;
+      chatChannelId = oneToOneChatChannelRef.doc().id;
 
       var channel = {'channelId': chatChannelId};
-      var channel1 = {
-        'channelId': chatChannelId,
-      };
+      // var channel1 = {
+      //   'channelId': chatChannelId,
+      // };
 
       oneToOneChatChannelRef.doc(chatChannelId).set(channel);
 
@@ -179,14 +180,14 @@ class ChatRepository implements IChatRepository {
 
       return chatChannelId;
     });
-    return Future.value("added");
+    return Future.value('');
   }
 
   @override
-  Future<void> sendTextMessage(
+  Future<void> sendTextMessage(bool channel,
       TextMessageEntity textMessageEntity, String channelId) async {
     final messagesRef = fireStore
-        .collection("groupChatChannel")
+        .collection(channel ? "OneToOneChatChannel" : "groupChatChannel")
         .doc(channelId)
         .collection("messages");
 
@@ -208,8 +209,9 @@ class ChatRepository implements IChatRepository {
   }
 
   @override
-  Stream<List<TextMessageEntity>> getMessages(String channelId) {
-    final oneToOneChatChannelRef = fireStore.collection("groupChatChannel");
+  Stream<List<TextMessageEntity>> getMessages(bool channel, String channelId) {
+    final oneToOneChatChannelRef = fireStore
+        .collection(channel ? "OneToOneChatChannel" : "groupChatChannel");
     final messagesRef =
         oneToOneChatChannelRef.doc(channelId).collection("messages");
 
@@ -229,11 +231,12 @@ class ChatRepository implements IChatRepository {
         .collection("users")
         .doc(myChatEntity.recipientUID)
         .collection("myChat");
-
-    //final channelId = await createOneToOneChatChannel();
+    final engageUserEntity = EngageUserEntity(
+        uid: myChatEntity.senderUID, otherUid: myChatEntity.recipientUID);
+    final channelId = await getChannelId(engageUserEntity);
 
     final myNewChatCurrentUser = MyChatModel(
-      channelId: myChatEntity.channelId,
+      channelId: channelId,
       senderName: myChatEntity.senderName,
       time: myChatEntity.time,
       recipientName: myChatEntity.recipientName,
@@ -248,7 +251,7 @@ class ChatRepository implements IChatRepository {
       subjectName: myChatEntity.subjectName,
     ).toDocument();
     final myNewChatOtherUser = MyChatModel(
-      channelId: myChatEntity.channelId,
+      channelId: channelId,
       senderName: myChatEntity.recipientName,
       time: myChatEntity.time,
       recipientName: myChatEntity.senderName,

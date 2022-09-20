@@ -6,13 +6,13 @@ class _MessageTile extends StatelessWidget {
     required this.messageData,
   }) : super(key: key);
 
-  final MessageData messageData;
+  final MyChatEntity messageData;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(ChatScreen.route(data: messageData));
+        Navigator.of(context).push(ChatScreen.route(messageData: messageData));
       },
       child: Container(
         height: 100,
@@ -31,7 +31,9 @@ class _MessageTile extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Avatar(url: messageData.profilePicture, radius: 50),
+                child: Avatar(
+                    url: messageData.profileUrl ?? Helpers.randomPictureUrl(),
+                    radius: 50),
               ),
               Expanded(
                 child: Column(
@@ -41,7 +43,7 @@ class _MessageTile extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: Text(
-                        messageData.senderName,
+                        messageData.senderName ?? 'name',
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           letterSpacing: 0.2,
@@ -53,7 +55,7 @@ class _MessageTile extends StatelessWidget {
                     SizedBox(
                       height: 20,
                       child: Text(
-                        messageData.message,
+                        messageData.recentTextMessage ?? '',
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontSize: 12,
@@ -72,7 +74,7 @@ class _MessageTile extends StatelessWidget {
                   children: [
                     const SizedBox(height: 4),
                     Text(
-                      messageData.dateMessage.toUpperCase(),
+                      Jiffy().from(messageData.time?.toDate()),
                       style: const TextStyle(
                         fontSize: 11,
                         letterSpacing: -0.2,
@@ -105,6 +107,15 @@ class _MessageTile extends StatelessWidget {
     );
   }
 }
+
+// MessageData(
+//                       senderName: state.myChats[index].senderName ?? 'dsds',
+//                       message: state.myChats[index].recentTextMessage ?? 'sdsd',
+//                       messageDate: state.myChats[index].time?.toDate() ??
+//                           Helpers.randomDate(),
+//                       dateMessage: '',
+//                       profilePicture: Helpers.randomPictureUrl(),
+//                     ),
 
 class PeakAndPopWidget extends StatelessWidget {
   const PeakAndPopWidget({

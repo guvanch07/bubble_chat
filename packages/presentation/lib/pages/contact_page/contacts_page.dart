@@ -94,13 +94,9 @@ class SingleItemStoriesStatusWidget extends StatelessWidget {
         ChatScreen.route(
           uid: uid,
           otherUid: user.uid,
-          data: MessageData(
-              //TODO change datamodel
-              dateMessage: '',
-              message: '',
-              messageDate: DateTime.now(),
-              profilePicture: user.profileUrl ?? '',
-              senderName: user.name),
+         
+              
+              messageData: ,
         ),
       ),
       child: Container(

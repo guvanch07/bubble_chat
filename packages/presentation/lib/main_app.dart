@@ -20,8 +20,7 @@ class MyApp extends StatelessWidget {
             create: (context) => GetIt.I.get<AuthCubit>()..appStarted()),
         BlocProvider(create: (context) => GetIt.I.get<CredentialCubit>()),
         BlocProvider(create: (context) => GetIt.I.get<UserCubit>()..getUsers()),
-        BlocProvider(
-            create: (context) => GetIt.I.get<MessagesCubit>()..getUsers()),
+        BlocProvider(create: (context) => GetIt.I.get<MessagesCubit>()),
       ],
       child: MaterialApp(
         theme: AppTheme.light(),

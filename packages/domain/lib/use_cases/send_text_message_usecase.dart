@@ -6,8 +6,9 @@ class SendTextMessageUseCase {
 
   SendTextMessageUseCase({required this.repository});
 
-  Future<void> call(
-      TextMessageEntity textMessageEntity, String channelId) async {
-    return await repository.sendTextMessage(textMessageEntity, channelId);
+  Future<void> call(bool channel, TextMessageEntity textMessageEntity,
+      String channelId) async {
+    return await repository.sendTextMessage(
+        channel, textMessageEntity, channelId);
   }
 }
