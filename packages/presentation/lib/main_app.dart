@@ -6,6 +6,7 @@ import 'package:presentation/pages/message/cubit/messages_cubit.dart';
 import 'package:presentation/screens/auth/auth/auth_cubit.dart';
 import 'package:presentation/screens/auth/credential_cubit/credential_cubit.dart';
 import 'package:presentation/screens/auth/ui/login_view.dart';
+import 'package:presentation/screens/chat/cubit/chat_messages_cubit.dart';
 import 'package:presentation/screens/home/ui/main_home_screen.dart';
 import 'package:get_it/get_it.dart';
 
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => GetIt.I.get<CredentialCubit>()),
         BlocProvider(create: (context) => GetIt.I.get<UserCubit>()..getUsers()),
         BlocProvider(create: (context) => GetIt.I.get<MessagesCubit>()),
+        BlocProvider(create: (context) => GetIt.I.get<ChatMessagesCubit>()),
       ],
       child: MaterialApp(
         theme: AppTheme.light(),

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:presentation/pages/contact_page/cubit/user_cubit.dart';
 import 'package:presentation/screens/chat/ui/main_chat_screen.dart';
+import 'package:domain/entities/my_chat_entity.dart';
 
 class ContactsPage extends StatelessWidget {
   final String uid;
@@ -94,9 +95,7 @@ class SingleItemStoriesStatusWidget extends StatelessWidget {
         ChatScreen.route(
           uid: uid,
           otherUid: user.uid,
-         
-              
-              messageData: ,
+          messageData: const MyChatEntity(),
         ),
       ),
       child: Container(

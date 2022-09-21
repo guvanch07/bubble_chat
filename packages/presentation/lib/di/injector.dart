@@ -3,6 +3,7 @@ import 'package:presentation/pages/contact_page/cubit/user_cubit.dart';
 import 'package:presentation/pages/message/cubit/messages_cubit.dart';
 import 'package:presentation/screens/auth/auth/auth_cubit.dart';
 import 'package:presentation/screens/auth/credential_cubit/credential_cubit.dart';
+import 'package:presentation/screens/chat/cubit/chat_messages_cubit.dart';
 
 Future<void> injectPresentationModeule(GetIt sl) async {
   /// servicees
@@ -35,6 +36,12 @@ Future<void> injectPresentationModeule(GetIt sl) async {
   );
   sl.registerFactory<MessagesCubit>(
     () => MessagesCubit(
+      sl.get(),
+    ),
+  );
+  sl.registerFactory<ChatMessagesCubit>(
+    () => ChatMessagesCubit(
+      sl.get(),
       sl.get(),
     ),
   );

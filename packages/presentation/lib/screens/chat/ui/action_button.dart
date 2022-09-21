@@ -6,9 +6,11 @@ class _ActionBar extends StatelessWidget {
     Key? key,
     required this.uid,
     required this.otherUid,
+    required this.myChatEntity,
   }) : super(key: key);
   final String? uid;
   final String? otherUid;
+  final MyChatEntity myChatEntity;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,15 @@ class _ActionBar extends StatelessWidget {
               color: AppColors.accent,
               icon: const Icon(CupertinoIcons.mic_fill, size: 25),
               onPressed: () {
-              context.read<ChatMessagesCubit>().sendTextMessage(channel: true,textMessageEntity: TextMessageEntity(),channelId: );
+                context.read<ChatMessagesCubit>().sendTextMessage(
+                    channel: true,
+                    textMessageEntity: TextMessageEntity(
+                        senderId: myChatEntity.senderUID,
+                        senderName: myChatEntity.senderName,
+                        receiverName: myChatEntity.recipientName,
+                        recipientId: myChatEntity.recipientUID,
+                        content: 'heeey'),
+                    channelId: myChatEntity.channelId ?? '');
                 // BlocProvider.of<UserCubit>(context)
                 //     .createOneToOneChatChannel(
                 //         user: EngageUserEntity(

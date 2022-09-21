@@ -66,8 +66,4 @@ Future<void> injectDomainModeule(GetIt sl) async {
       () => AddToMyChatUseCase(repository: sl.call()));
   sl.registerLazySingleton<GetMyChatUseCase>(
       () => GetMyChatUseCase(repository: sl.call()));
-  sl.registerLazySingleton<SendTextMessageUseCase>(
-      () => SendTextMessageUseCase(repository: sl.call()));
-  sl.registerLazySingleton<GetMessageUseCase>(
-      () => GetMessageUseCase(repository: sl.call()));
 }

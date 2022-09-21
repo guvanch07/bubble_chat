@@ -1,41 +1,54 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'main_chat_screen.dart';
 
-class _DemoMessageList extends StatelessWidget {
-  const _DemoMessageList({Key? key}) : super(key: key);
+class _DemoMessageList extends StatefulWidget {
+  const _DemoMessageList({
+    Key? key,
+    required this.messageData,
+  }) : super(key: key);
+
+  final MyChatEntity messageData;
+
+  @override
+  State<_DemoMessageList> createState() => _DemoMessageListState();
+}
+
+class _DemoMessageListState extends State<_DemoMessageList> {
+
+@override
+  void initState() {
+    context.read<ChatMessagesCubit>().getMessages(channel: true, channelId: widget.messageData.channelId ??'');
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: ListView(
-          children: const [
-            _DateLable(lable: 'Yesterday'),
-            _MessageTile(
-              message: 'Hi, Lucy! How\'s your day going?',
-              messageDate: '12:01 PM',
-            ),
-            _MessageOwnTile(
-              message: 'You know how it goes...',
-              messageDate: '12:02 PM',
-            ),
-            _MessageTile(
-              message: 'Do you want Starbucks?',
-              messageDate: '12:02 PM',
-            ),
-            _MessageOwnTile(
-              message: 'Would be awesome!',
-              messageDate: '12:03 PM',
-            ),
-            _MessageTile(
-              message: 'Coming up!',
-              messageDate: '12:03 PM',
-            ),
-            _MessageOwnTile(
-              message: 'YAY!!!',
-              messageDate: '12:03 PM',
-            ),
-          ],
+        child: BlocBuilder<ChatMessagesCubit, ChatMessagesState>(
+          builder: (context, state) {
+            if (state is ChatMessagesLoading) {
+              return const Center(child: CircularProgressIndicator.adaptive());
+            }
+            if (state is ChatMessagesLoaded) {
+              return ListView.separated(
+                separatorBuilder: (BuildContext context, int index) =>
+                    const SizedBox(height: 10),
+                itemBuilder: (context, index) {
+                  final msg = state.messages[index];
+                  return _MessageTile(
+                    message: msg.content ?? '',
+                    messageDate: '10:10',
+                  );
+                },
+                itemCount: state.messages.length,
+              );
+            }
+
+            return const Text("something is wrong");
+          },
         ),
       ),
     );
