@@ -5,11 +5,18 @@ import 'package:presentation/core/theme/theme.dart';
 import 'package:presentation/pages/calls_page/calls_page.dart';
 import 'package:presentation/pages/contact_page/contacts_page.dart';
 import 'package:presentation/pages/message/main_messages_page.dart';
-import 'package:presentation/pages/notification/notifications_page.dart';
+import 'package:presentation/screens/add_screen/add_contact.dart';
 import 'package:presentation/widgets/avatar.dart';
 import 'package:presentation/widgets/icon_avatar.dart';
 
 part 'nav_bar_widget.dart';
+
+const pageTitles = [
+  'Messages',
+  'Calls',
+  'Contacts',
+  'Setting',
+];
 
 class HomeScreen extends StatelessWidget {
   final String uid;
@@ -21,13 +28,6 @@ class HomeScreen extends StatelessWidget {
   final ValueNotifier<int> pageIndex = ValueNotifier(0);
   final ValueNotifier<String> title = ValueNotifier('Messages');
 
-  final pageTitles = const [
-    'Messages',
-    'Notifications',
-    'Calls',
-    'Contacts',
-  ];
-
   void _onNavigationItemSelected(index) {
     title.value = pageTitles[index];
     pageIndex.value = index;
@@ -37,9 +37,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final pages = [
       MessagesPage(uid: uid),
-      const UploadingImage(),
       const CallsPage(),
       ContactsPage(uid: uid),
+      const CallsPage(),
     ];
     return Scaffold(
       appBar: AppBar(
@@ -68,7 +68,7 @@ class HomeScreen extends StatelessWidget {
               color: AppColors.accent,
               icon: const Icon(CupertinoIcons.add, size: 18),
               iconColor: Colors.white,
-              onPressed: () {}),
+              onPressed: () => Navigator.push(context, AddNewContacts.route())),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: IconAvatar(

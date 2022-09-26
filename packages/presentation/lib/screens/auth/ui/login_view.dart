@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:domain/core/helpers/debugging.dart';
+import 'package:presentation/core/heplers/ui_components.dart';
 import 'package:presentation/screens/auth/auth/auth_cubit.dart';
 import 'package:presentation/screens/auth/credential_cubit/credential_cubit.dart';
 import 'package:presentation/screens/auth/ui/register_view.dart';
@@ -28,7 +29,10 @@ class LoginView extends StatelessWidget {
             BlocProvider.of<AuthCubit>(context).loggedIn();
           }
           if (state is CredentialFailure) {
-            log('error');
+            AppUIHelpers.snackBarNetwork(
+              context: context,
+              msg: "wrong email please check",
+            );
           }
         },
         builder: (context, state) {

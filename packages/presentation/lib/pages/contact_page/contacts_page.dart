@@ -1,15 +1,14 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:developer';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:domain/entities/user_entity.dart';
-import 'package:domain/models/message_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:presentation/pages/contact_page/cubit/user_cubit.dart';
 import 'package:presentation/screens/chat/ui/main_chat_screen.dart';
 import 'package:domain/entities/my_chat_entity.dart';
+import 'package:domain/entities/engage_user_entity.dart';
 
 class ContactsPage extends StatelessWidget {
   final String uid;
@@ -91,14 +90,22 @@ class SingleItemStoriesStatusWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.of(context).push(
-        ChatScreen.route(
+      onTap: () {
+        BlocProvider.of<UserCubit>(context).createOneToOneChatChannel(
+            user: EngageUserEntity(
           uid: uid,
           otherUid: user.uid,
-          messageData: const MyChatEntity(),
-        ),
-      ),
-      child: Container(
+        ));
+
+        Navigator.of(context).push(
+          ChatScreen.route(
+            uid: uid,
+            otherUid: user.uid,
+            messageData: const MyChatEntity(),
+          ),
+        );
+      },
+      child: Padding(
         padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
         child: Column(
           children: [

@@ -24,3 +24,8 @@ class CredentialFailure extends CredentialState {
   @override
   List<Object> get props => [];
 }
+
+class CredentialConvertFile extends CredentialState {
+  @override
+  List<Object> get props => [];
+}

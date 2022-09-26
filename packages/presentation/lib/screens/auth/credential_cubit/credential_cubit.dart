@@ -77,4 +77,32 @@ class CredentialCubit extends Cubit<CredentialState> {
       emit(CredentialFailure());
     }
   }
+
+  // File? _image;
+  // String? _profileUrl;
+
+  // Future<void> uploadImage()async{
+  //   try {
+  //     final pickedFile =
+  //         await ImagePicker().pickImage(source: ImageSource.gallery);
+
+  //     setState(() {
+  //       if (pickedFile != null) {
+  //         _image = File(pickedFile.path);
+  //         StorageProviderRemoteDataSource.uploadFile(file: _image!)
+  //             .then((value) {
+  //           log("profileUrl");
+  //           setState(() {
+  //             _profileUrl = value;
+  //           });
+  //         });
+  //       } else {
+  //         log('No image selected.');
+  //       }
+  //     });
+  //   } catch (e) {
+  //     AppUIHelpers.toast("error $e");
+  //   }
+  // }
+
 }

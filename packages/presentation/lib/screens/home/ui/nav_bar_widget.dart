@@ -25,7 +25,7 @@ class __BottomNavigationBarState extends State<_BottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 70,
+      height: 72,
       margin: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
       child: Neumorphic(
         style: const NeumorphicStyle(
@@ -43,28 +43,24 @@ class __BottomNavigationBarState extends State<_BottomNavigationBar> {
           children: [
             _NavigationBarItem(
               index: 0,
-              lable: 'Messages',
               icon: CupertinoIcons.bubble_left_fill,
               isSelected: (selectedIndex == 0),
               onTap: handleItemSelected,
             ),
             _NavigationBarItem(
               index: 1,
-              lable: 'Notifications',
-              icon: CupertinoIcons.camera,
+              icon: CupertinoIcons.phone_fill,
               isSelected: (selectedIndex == 1),
               onTap: handleItemSelected,
             ),
             _NavigationBarItem(
               index: 2,
-              lable: 'Calls',
-              icon: CupertinoIcons.music_albums,
+              icon: CupertinoIcons.person_2_fill,
               isSelected: (selectedIndex == 2),
               onTap: handleItemSelected,
             ),
             _NavigationBarItem(
               index: 3,
-              lable: 'Contacts',
               icon: CupertinoIcons.settings,
               isSelected: (selectedIndex == 3),
               onTap: handleItemSelected,
@@ -76,18 +72,25 @@ class __BottomNavigationBarState extends State<_BottomNavigationBar> {
   }
 }
 
+// class BottomNavCubit extends Cubit<int> {
+//   BottomNavCubit(super.initialState);
+//   int selectedIndex = 0;
+
+//   void handleItemSelected(int index) {
+//     emit(selectedIndex = index);
+//   }
+//   }
 class _NavigationBarItem extends StatelessWidget {
   const _NavigationBarItem({
     Key? key,
     required this.index,
-    required this.lable,
     required this.icon,
     this.isSelected = false,
     required this.onTap,
   }) : super(key: key);
 
   final int index;
-  final String lable;
+
   final IconData icon;
   final bool isSelected;
   final ValueChanged<int> onTap;
@@ -109,12 +112,14 @@ class _NavigationBarItem extends StatelessWidget {
             depth: isSelected ? -2 : 3,
             boxShape: const NeumorphicBoxShape.circle()),
         child: SizedBox(
-          width: 50,
-          height: 50,
-          child: Icon(
-            icon,
-            size: 22,
-            color: isSelected ? AppColors.accent : null,
+          width: 54,
+          height: 54,
+          child: Center(
+            child: Icon(
+              icon,
+              size: 22,
+              color: isSelected ? AppColors.accent : null,
+            ),
           ),
         ),
       ),

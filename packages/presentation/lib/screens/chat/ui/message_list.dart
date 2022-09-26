@@ -14,13 +14,12 @@ class _DemoMessageList extends StatefulWidget {
 }
 
 class _DemoMessageListState extends State<_DemoMessageList> {
-
-@override
+  @override
   void initState() {
-    context.read<ChatMessagesCubit>().getMessages(channel: true, channelId: widget.messageData.channelId ??'');
+    context.read<ChatMessagesCubit>().getMessages(
+        channel: true, channelId: widget.messageData.channelId ?? '');
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -34,16 +33,24 @@ class _DemoMessageListState extends State<_DemoMessageList> {
             }
             if (state is ChatMessagesLoaded) {
               return ListView.separated(
-                separatorBuilder: (BuildContext context, int index) =>
-                    const SizedBox(height: 10),
+                reverse: true,
                 itemBuilder: (context, index) {
                   final msg = state.messages[index];
-                  return _MessageTile(
-                    message: msg.content ?? '',
+                  if (msg.senderId != msg.senderId) {
+                    return _MessageTile(
+                      message: msg.content ?? '',
+                      messageDate: '10:10',
+                    );
+                  }
+
+                  return _MessageOwnTile(
+                    message: msg.content ?? "",
                     messageDate: '10:10',
                   );
                 },
                 itemCount: state.messages.length,
+                separatorBuilder: (BuildContext context, int index) =>
+                    const SizedBox(height: 10),
               );
             }
 

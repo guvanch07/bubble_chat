@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => GetIt.I.get<UserCubit>()..getUsers()),
         BlocProvider(create: (context) => GetIt.I.get<MessagesCubit>()),
         BlocProvider(create: (context) => GetIt.I.get<ChatMessagesCubit>()),
+        // BlocProvider(create: (context) => BottomNavCubit(0)),
       ],
       child: MaterialApp(
         theme: AppTheme.light(),

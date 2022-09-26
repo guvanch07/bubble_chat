@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:presentation/core/heplers/random.dart';
 import 'package:presentation/screens/auth/auth/auth_cubit.dart';
 import 'package:presentation/screens/auth/credential_cubit/credential_cubit.dart';
 import 'package:presentation/screens/home/ui/main_home_screen.dart';
@@ -70,6 +71,16 @@ class RegiterBuilder extends HookWidget {
     final passwordController = useTextEditingController(
       text: '123456'.ifDebugging,
     );
+    final numberController = useTextEditingController(
+      text: '123456'.ifDebugging,
+    );
+    final statusController = useTextEditingController(
+      text: 'hey, let\'s chat'.ifDebugging,
+    );
+
+    final nameController = useTextEditingController(
+      text: 'guvanch'.ifDebugging,
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -98,6 +109,31 @@ class RegiterBuilder extends HookWidget {
               obscureText: true,
               obscuringCharacter: '◉',
             ),
+            TextField(
+              controller: nameController,
+              decoration: const InputDecoration(
+                hintText: 'Enter your number here...',
+              ),
+            ),
+            TextField(
+              controller: numberController,
+              decoration: const InputDecoration(
+                hintText: 'Enter your number here...',
+              ),
+            ),
+            TextField(
+              controller: statusController,
+              decoration: const InputDecoration(
+                  hintText: 'write something some...', label: Text('status')),
+            ),
+            IconButton(
+              onPressed: () => BlocProvider.of<CredentialCubit>(context)
+                  .googleSignInUseCase(),
+              icon: const Icon(
+                Icons.login,
+                size: 40,
+              ),
+            ),
             TextButton(
               onPressed: () {
                 if (emailController.text.isEmpty) return;
@@ -105,9 +141,9 @@ class RegiterBuilder extends HookWidget {
                 BlocProvider.of<CredentialCubit>(context).signUpSubmit(
                   user: UserEntity(
                     email: emailController.text,
-                    phoneNumber: '',
-                    name: emailController.text.split('@').join(),
-                    profileUrl: '',
+                    phoneNumber: numberController.text,
+                    name: nameController.text,
+                    profileUrl: Helpers.randomPictureUrl(),
                     gender: '',
                     dob: '',
                     password: passwordController.text,

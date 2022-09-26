@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:presentation/core/theme/theme.dart';
 
@@ -6,13 +7,14 @@ class CustomTextFields extends StatelessWidget {
     Key? key,
     this.prefix,
     this.suffix,
+    required this.controller,
   }) : super(key: key);
   final Widget? prefix;
   final Widget? suffix;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
-    int maxLine = 1;
     return Neumorphic(
       style: const NeumorphicStyle(
         shadowDarkColor: Colors.black,
@@ -24,9 +26,10 @@ class CustomTextFields extends StatelessWidget {
         boxShape: NeumorphicBoxShape.stadium(),
       ),
       child: TextField(
+        controller: controller,
         cursorColor: AppColors.accent,
         style: const TextStyle(fontSize: 14),
-        maxLines: maxLine,
+        maxLines: null,
         decoration: InputDecoration(
           prefixIcon: prefix,
           suffixIcon: suffix,
