@@ -31,7 +31,7 @@ class _ActionBar extends HookWidget {
               color: AppColors.accent,
               icon: const Icon(Icons.send, size: 25),
               onPressed: () {
-                if (otherUid == null) {
+                if (MyChatEntity().recipientUID == null) {
                   BlocProvider.of<UserCubit>(context).addToMyChat(MyChatEntity(
                     senderUID: uid,
                     recipientUID: otherUid,

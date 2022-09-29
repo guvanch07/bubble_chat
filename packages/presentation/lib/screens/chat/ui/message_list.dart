@@ -32,6 +32,9 @@ class _DemoMessageListState extends State<_DemoMessageList> {
               return const Center(child: CircularProgressIndicator.adaptive());
             }
             if (state is ChatMessagesLoaded) {
+              if (state.messages.isEmpty) {
+                return const Text('empty');
+              }
               return ListView.separated(
                 reverse: true,
                 itemBuilder: (context, index) {

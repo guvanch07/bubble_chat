@@ -113,8 +113,8 @@ class LoginBuilder extends HookWidget {
             ),
           ),
           TextButton(
-            onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const RegiterBuilder())),
+            onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const RegisterView())),
             child: const Text(
               'Not registered yet? Register here!',
             ),
