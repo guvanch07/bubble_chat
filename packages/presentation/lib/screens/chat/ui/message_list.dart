@@ -7,17 +7,22 @@ class _DemoMessageList extends StatefulWidget {
     required this.messageData,
   }) : super(key: key);
 
-  final MyChatEntity messageData;
+  final MyChatEntity? messageData;
 
   @override
   State<_DemoMessageList> createState() => _DemoMessageListState();
 }
 
 class _DemoMessageListState extends State<_DemoMessageList> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
+    if (widget.messageData == null) {
+      'empty';
+    }
     context.read<ChatMessagesCubit>().getMessages(
-        channel: true, channelId: widget.messageData.channelId ?? '');
+        channel: true, channelId: widget.messageData?.channelId ?? '');
     super.initState();
   }
 
@@ -31,29 +36,15 @@ class _DemoMessageListState extends State<_DemoMessageList> {
             if (state is ChatMessagesLoading) {
               return const Center(child: CircularProgressIndicator.adaptive());
             }
+
             if (state is ChatMessagesLoaded) {
               if (state.messages.isEmpty) {
                 return const Text('empty');
               }
-              return ListView.separated(
-                reverse: true,
-                itemBuilder: (context, index) {
-                  final msg = state.messages[index];
-                  if (msg.senderId != msg.senderId) {
-                    return _MessageTile(
-                      message: msg.content ?? '',
-                      messageDate: '10:10',
-                    );
-                  }
-
-                  return _MessageOwnTile(
-                    message: msg.content ?? "",
-                    messageDate: '10:10',
-                  );
-                },
-                itemCount: state.messages.length,
-                separatorBuilder: (BuildContext context, int index) =>
-                    const SizedBox(height: 10),
+              return MsgReadSection(
+                messages: state.messages,
+                messageData: widget.messageData,
+                scrollController: _scrollController,
               );
             }
 
@@ -61,6 +52,51 @@ class _DemoMessageListState extends State<_DemoMessageList> {
           },
         ),
       ),
+    );
+  }
+}
+
+class MsgReadSection extends StatelessWidget {
+  const MsgReadSection({
+    Key? key,
+    required this.messages,
+    this.messageData,
+    required this.scrollController,
+  }) : super(key: key);
+
+  final List<TextMessageEntity> messages;
+  final MyChatEntity? messageData;
+  final ScrollController scrollController;
+
+  @override
+  Widget build(BuildContext context) {
+    Timer(const Duration(milliseconds: 100), () {
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 100),
+        curve: Curves.easeIn,
+      );
+    });
+    return ListView.separated(
+      controller: scrollController,
+      //reverse: true,
+      itemBuilder: (context, index) {
+        final msg = messages[index];
+        if (msg.senderId != messageData?.senderUID) {
+          return _MessageTile(
+            message: msg.content ?? '',
+            messageDate: DateFormatter.timeformatter(msg.time?.toDate()),
+          );
+        }
+
+        return _MessageOwnTile(
+          message: msg.content ?? "",
+          messageDate: DateFormatter.timeformatter(msg.time?.toDate()),
+        );
+      },
+      itemCount: messages.length,
+      separatorBuilder: (BuildContext context, int index) =>
+          const SizedBox(height: 10),
     );
   }
 }

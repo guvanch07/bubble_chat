@@ -138,7 +138,7 @@ class ChatRepository implements IChatRepository {
   @override
   Future<String> createOneToOneChatChannel(
       EngageUserEntity engageUserEntity) async {
-    String chatChannelId;
+    String chatChannelId = '';
     //User Collection Reference
     final userCollectionRef = fireStore.collection("users");
 
@@ -178,9 +178,16 @@ class ChatRepository implements IChatRepository {
           .doc(engageUserEntity.uid)
           .set(channel);
 
+      addToMyChat(
+        MyChatEntity(
+            channelId: chatChannelId,
+            senderUID: engageUserEntity.uid,
+            recipientUID: engageUserEntity.otherUid),
+      );
+
       return chatChannelId;
     });
-    return Future.value('');
+    return Future.value(chatChannelId);
   }
 
   @override

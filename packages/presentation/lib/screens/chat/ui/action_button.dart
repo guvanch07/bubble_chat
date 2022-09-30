@@ -9,7 +9,7 @@ class _ActionBar extends HookWidget {
   }) : super(key: key);
   final String? uid;
   final String? otherUid;
-  final MyChatEntity myChatEntity;
+  final MyChatEntity? myChatEntity;
 
   @override
   Widget build(BuildContext context) {
@@ -31,25 +31,26 @@ class _ActionBar extends HookWidget {
               color: AppColors.accent,
               icon: const Icon(Icons.send, size: 25),
               onPressed: () {
-                if (MyChatEntity().recipientUID == null) {
-                  BlocProvider.of<UserCubit>(context).addToMyChat(MyChatEntity(
-                    senderUID: uid,
-                    recipientUID: otherUid,
-                    senderName: myChatEntity.senderName,
-                    recipientName: myChatEntity.recipientName,
-                  ));
-                }
+                // if (myChatEntity.channelId == null) {
+                //   BlocProvider.of<UserCubit>(context).addToMyChat(MyChatEntity(
+                //     senderUID: uid,
+                //     recipientUID: otherUid,
+                //     senderName: myChatEntity.senderName,
+                //     recipientName: myChatEntity.recipientName,
+                //   ));
+                // }
 
                 if (msgController.text.isNotEmpty) {
                   context.read<ChatMessagesCubit>().sendTextMessage(
                       channel: true,
                       textMessageEntity: TextMessageEntity(
-                          senderId: myChatEntity.senderUID,
-                          senderName: myChatEntity.senderName,
-                          receiverName: myChatEntity.recipientName,
-                          recipientId: myChatEntity.recipientUID,
+                          senderId: myChatEntity?.senderUID,
+                          senderName: myChatEntity?.senderName,
+                          receiverName: myChatEntity?.recipientName,
+                          recipientId: myChatEntity?.recipientUID,
+                          time: Timestamp.now(),
                           content: msgController.text),
-                      channelId: myChatEntity.channelId ?? '');
+                      channelId: myChatEntity?.channelId ?? '');
                   msgController.clear();
                 }
 
