@@ -32,7 +32,6 @@ class _UploadingImageState extends State<UploadingImage> {
       File imageFile = File(pickedImage.path);
 
       try {
-        // Uploading the selected image with some custom meta data
         await storage.ref(fileName).putFile(
             imageFile,
             SettableMetadata(customMetadata: {

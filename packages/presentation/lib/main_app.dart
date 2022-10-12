@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:presentation/core/theme/theme.dart';
+import 'package:presentation/pages/calls_page/cubit/group_cubit.dart';
 import 'package:presentation/pages/contact_page/cubit/user_cubit.dart';
 import 'package:presentation/pages/message/cubit/messages_cubit.dart';
 import 'package:presentation/screens/auth/auth/auth_cubit.dart';
@@ -23,7 +24,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => GetIt.I.get<UserCubit>()..getUsers()),
         BlocProvider(create: (context) => GetIt.I.get<MessagesCubit>()),
         BlocProvider(create: (context) => GetIt.I.get<ChatMessagesCubit>()),
-        // BlocProvider(create: (context) => BottomNavCubit(0)),
+        BlocProvider(
+            create: (context) => GetIt.I.get<GroupCubit>()..getGroups()),
       ],
       child: MaterialApp(
         theme: AppTheme.light(),

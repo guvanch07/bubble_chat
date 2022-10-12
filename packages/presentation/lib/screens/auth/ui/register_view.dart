@@ -18,45 +18,38 @@ class RegisterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Log in',
-        ),
-      ),
-      body: BlocConsumer<CredentialCubit, CredentialState>(
-        listener: (context, state) {
-          if (state is CredentialSuccess) {
-            BlocProvider.of<AuthCubit>(context).loggedIn();
-          }
-          if (state is CredentialFailure) {
-            AppUIHelpers.snackBarNetwork(
-              context: context,
-              msg: "wrong email please check",
-            );
-          }
-        },
-        builder: (context, state) {
-          if (state is CredentialLoading) {
-            return const Center(child: CircularProgressIndicator.adaptive());
-          }
+    return BlocConsumer<CredentialCubit, CredentialState>(
+      listener: (context, state) {
+        if (state is CredentialSuccess) {
+          BlocProvider.of<AuthCubit>(context).loggedIn();
+        }
+        if (state is CredentialFailure) {
+          AppUIHelpers.snackBarNetwork(
+            context: context,
+            msg: "wrong email please check",
+          );
+        }
+      },
+      builder: (context, state) {
+        if (state is CredentialLoading) {
+          return const Center(child: CircularProgressIndicator.adaptive());
+        }
 
-          if (state is CredentialSuccess) {
-            return BlocBuilder<AuthCubit, AuthState>(
-                builder: (context, authState) {
-              log('authSate');
-              if (authState is Authenticated) {
-                log('Authenticated');
-                return HomeScreen(uid: authState.uid);
-              } else {
-                return const RegiterBuilder();
-              }
-            });
-          }
+        if (state is CredentialSuccess) {
+          return BlocBuilder<AuthCubit, AuthState>(
+              builder: (context, authState) {
+            log('authSate');
+            if (authState is Authenticated) {
+              log('Authenticated');
+              return HomeScreen(uid: authState.uid);
+            } else {
+              return const RegiterBuilder();
+            }
+          });
+        }
 
-          return const RegiterBuilder();
-        },
-      ),
+        return const RegiterBuilder();
+      },
     );
   }
 }
@@ -89,13 +82,23 @@ class RegiterBuilder extends HookWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Register',
+          'Log in',
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
+            IconButton(
+              icon: CircleAvatar(
+                radius: 30,
+                backgroundImage: NetworkImage(
+                    context.watch<CredentialCubit>().uploadedImage ??
+                        Helpers.randomPictureUrl()),
+              ),
+              onPressed: () =>
+                  context.read<CredentialCubit>().upload("gallery"),
+            ),
             TextField(
               controller: emailController,
               decoration: const InputDecoration(
@@ -142,12 +145,16 @@ class RegiterBuilder extends HookWidget {
               onPressed: () {
                 if (emailController.text.isEmpty) return;
                 if (passwordController.text.isEmpty) return;
-                BlocProvider.of<CredentialCubit>(context).signUpSubmit(
+                BlocProvider.of<CredentialCubit>(context, listen: false)
+                    .signUpSubmit(
                   user: UserEntity(
                     email: emailController.text,
                     phoneNumber: numberController.text,
                     name: nameController.text,
-                    profileUrl: Helpers.randomPictureUrl(),
+                    profileUrl:
+                        BlocProvider.of<CredentialCubit>(context, listen: false)
+                                .uploadedImage ??
+                            Helpers.randomPictureUrl(),
                     gender: '',
                     dob: '',
                     password: passwordController.text,

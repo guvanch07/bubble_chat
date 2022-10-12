@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:presentation/pages/calls_page/cubit/group_cubit.dart';
 import 'package:presentation/pages/contact_page/cubit/user_cubit.dart';
 import 'package:presentation/pages/message/cubit/messages_cubit.dart';
 import 'package:presentation/screens/auth/auth/auth_cubit.dart';
@@ -9,6 +10,14 @@ Future<void> injectPresentationModeule(GetIt sl) async {
   /// servicees
 
   /// blocs
+  sl.registerFactory<GroupCubit>(
+    () => GroupCubit(
+      getCreateGroupUseCase: sl.get(),
+      storage: sl.get(),
+      getAllGroupsUseCase: sl.get(),
+    ),
+  );
+
   sl.registerFactory<AuthCubit>(
     () => AuthCubit(
       isSignInUseCase: sl.get(),
@@ -24,6 +33,7 @@ Future<void> injectPresentationModeule(GetIt sl) async {
       googleSignInUseCase: sl.get(),
       signInUseCase: sl.get(),
       signUpUseCase: sl.get(),
+      storage: sl.get(),
     ),
   );
   sl.registerFactory<UserCubit>(
