@@ -1,14 +1,95 @@
-part of 'main_chat_screen.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+
+import 'dart:async';
+
+import 'package:domain/entities/group_entity.dart';
+import 'package:domain/entities/text_messsage_entity.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:presentation/core/heplers/date_formater.dart';
+import 'package:presentation/core/theme/theme.dart';
+import 'package:presentation/pages/calls_page/action_button.dart';
+import 'package:presentation/pages/calls_page/cubit/group_cubit.dart';
+import 'package:presentation/screens/chat/cubit/chat_messages_cubit.dart';
+import 'package:presentation/widgets/icon_avatar.dart';
+
+class GroupChatScreen extends StatelessWidget {
+  static Route route({required GroupEntity groupEntity, required String uid}) =>
+      MaterialPageRoute(
+        builder: (context) => GroupChatScreen(
+          uid: uid,
+          groupEntity: groupEntity,
+        ),
+      );
+
+  const GroupChatScreen({
+    Key? key,
+    required this.groupEntity,
+    required this.uid,
+  }) : super(key: key);
+
+  final GroupEntity groupEntity;
+  final String uid;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: false,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leadingWidth: 54,
+        leading: Container(
+          margin: const EdgeInsets.only(left: 15),
+          padding: const EdgeInsets.all(3),
+          child: IconAvatar(
+              margin: 0,
+              icon: const Icon(CupertinoIcons.back, size: 20),
+              iconColor: AppColors.accent,
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              radius: 30),
+        ),
+      ),
+      body: Column(
+        children: [
+          _DemoMessageList(groupEntity: groupEntity),
+          GroupActionBar(groupEntity: groupEntity, uid: uid),
+          //JoinButton(groupEntity: groupEntity)
+        ],
+      ),
+    );
+  }
+}
+
+class JoinButton extends StatelessWidget {
+  const JoinButton({
+    Key? key,
+    required this.groupEntity,
+  }) : super(key: key);
+  final GroupEntity groupEntity;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      onPressed: () {
+        context.read<GroupCubit>().joinGroup(groupEntity: groupEntity);
+      },
+      color: AppColors.accent,
+      child: const Text('join'),
+    );
+  }
+}
 
 class _DemoMessageList extends StatefulWidget {
   const _DemoMessageList({
     Key? key,
-    required this.messageData,
-    required this.chatType,
+    required this.groupEntity,
   }) : super(key: key);
 
-  final MyChatEntity? messageData;
-  final bool chatType;
+  final GroupEntity groupEntity;
 
   @override
   State<_DemoMessageList> createState() => _DemoMessageListState();
@@ -19,9 +100,9 @@ class _DemoMessageListState extends State<_DemoMessageList> {
 
   @override
   void initState() {
-    context.read<ChatMessagesCubit>().getMessages(
-        channel: widget.chatType,
-        channelId: widget.messageData?.channelId ?? '');
+    context
+        .read<ChatMessagesCubit>()
+        .getMessages(channel: false, channelId: widget.groupEntity.groupId);
     super.initState();
   }
 
@@ -41,11 +122,10 @@ class _DemoMessageListState extends State<_DemoMessageList> {
               }
               return MsgReadSection(
                 messages: state.messages,
-                messageData: widget.messageData,
+                groupEntity: widget.groupEntity,
                 scrollController: _scrollController,
               );
             }
-
             return const Text("something is wrong");
           },
         ),
@@ -58,12 +138,12 @@ class MsgReadSection extends StatelessWidget {
   const MsgReadSection({
     Key? key,
     required this.messages,
-    this.messageData,
+    required this.groupEntity,
     required this.scrollController,
   }) : super(key: key);
 
   final List<TextMessageEntity> messages;
-  final MyChatEntity? messageData;
+  final GroupEntity groupEntity;
   final ScrollController scrollController;
 
   @override
@@ -80,7 +160,7 @@ class MsgReadSection extends StatelessWidget {
       //reverse: true,
       itemBuilder: (context, index) {
         final msg = messages[index];
-        if (msg.senderId != messageData?.senderUID) {
+        if (msg.senderId != groupEntity.uid) {
           return _MessageTile(
             message: msg.content ?? '',
             messageDate: DateFormatter.timeformatter(msg.time?.toDate()),

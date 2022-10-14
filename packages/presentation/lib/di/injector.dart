@@ -15,6 +15,7 @@ Future<void> injectPresentationModeule(GetIt sl) async {
       getCreateGroupUseCase: sl.get(),
       storage: sl.get(),
       getAllGroupsUseCase: sl.get(),
+      joinGroupUseCase: sl.call(),
     ),
   );
 

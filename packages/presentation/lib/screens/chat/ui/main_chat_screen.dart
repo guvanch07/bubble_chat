@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 import 'dart:developer';
 
@@ -23,9 +22,13 @@ part 'message_list.dart';
 
 class ChatScreen extends StatelessWidget {
   static Route route(
-          {MyChatEntity? messageData, String? uid, String? otherUid}) =>
+          {MyChatEntity? messageData,
+          String? uid,
+          String? otherUid,
+          required bool chatType}) =>
       MaterialPageRoute(
         builder: (context) => ChatScreen(
+          chatType: chatType,
           messageData: messageData,
           uid: uid,
           otherUid: otherUid,
@@ -35,6 +38,7 @@ class ChatScreen extends StatelessWidget {
   const ChatScreen({
     Key? key,
     required this.messageData,
+    required this.chatType,
     this.uid,
     this.otherUid,
   }) : super(key: key);
@@ -42,6 +46,7 @@ class ChatScreen extends StatelessWidget {
   final MyChatEntity? messageData;
   final String? uid;
   final String? otherUid;
+  final bool chatType;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +72,7 @@ class ChatScreen extends StatelessWidget {
           actions: _actions),
       body: Column(
         children: [
-          _DemoMessageList(messageData: messageData),
+          _DemoMessageList(messageData: messageData, chatType: chatType),
           _ActionBar(
             myChatEntity: messageData,
             otherUid: otherUid,

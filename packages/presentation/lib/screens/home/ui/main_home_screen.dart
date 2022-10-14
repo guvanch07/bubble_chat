@@ -37,9 +37,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final pages = [
       MessagesPage(uid: uid),
-      GroupChatScreen(uid: uid),
+      GroupListUsers(uid: uid),
       ContactsPage(uid: uid),
-      GroupChatScreen(uid: uid),
+      GroupListUsers(uid: uid),
     ];
     return Scaffold(
       appBar: AppBar(

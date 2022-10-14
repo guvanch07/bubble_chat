@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:domain/entities/group_entity.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,9 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:presentation/core/heplers/random.dart';
 import 'package:presentation/pages/calls_page/cubit/group_cubit.dart';
+import 'package:presentation/pages/calls_page/msg_group_screen.dart';
 
-class GroupChatScreen extends StatelessWidget {
-  const GroupChatScreen({required this.uid, Key? key}) : super(key: key);
+class GroupListUsers extends StatelessWidget {
+  const GroupListUsers({required this.uid, Key? key}) : super(key: key);
   final String uid;
 
   @override
@@ -25,9 +25,26 @@ class GroupChatScreen extends StatelessWidget {
               child: ListView.builder(
                 itemCount: state.groups.length,
                 itemBuilder: (context, index) {
+                  final groups = state.groups[index];
                   return ListTile(
+                    onTap: () => Navigator.push(
+                      context,
+                      GroupChatScreen.route(
+                        uid: uid,
+                        groupEntity: state.groups[index],
+                      ),
+                    ),
+                    subtitle: Text(
+                      groups.lastMessage,
+                      style: const TextStyle(color: Colors.amber),
+                    ),
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        groups.groupProfileImage ?? Helpers.randomPictureUrl(),
+                      ),
+                    ),
                     title: Text(
-                      state.groups[index].groupName,
+                      groups.groupName,
                       style: const TextStyle(color: Colors.amber),
                     ),
                   );

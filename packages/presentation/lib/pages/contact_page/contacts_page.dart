@@ -100,6 +100,7 @@ class SingleItemStoriesStatusWidget extends StatelessWidget {
           ChatScreen.route(
             uid: uid,
             otherUid: user.uid,
+            chatType: true,
           ),
         );
       },

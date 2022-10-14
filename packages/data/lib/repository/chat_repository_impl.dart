@@ -464,7 +464,7 @@ class ChatRepository implements IChatRepository {
         groupId: groupId,
         limitUsers: groupEntity.limitUsers,
         joinUsers: groupEntity.joinUsers,
-        groupProfileImage: groupEntity.groupProfileImage,
+        groupProfileImage: groupEntity.groupProfileImage ?? '',
         creationTime: groupEntity.creationTime,
         groupName: groupEntity.groupName,
         lastMessage: groupEntity.lastMessage,
@@ -494,7 +494,6 @@ class ChatRepository implements IChatRepository {
   @override
   Future<void> joinGroup(GroupEntity groupEntity) async {
     final groupChatChannelCollection = fireStore.collection("groupChatChannel");
-
     groupChatChannelCollection
         .doc(groupEntity.groupId)
         .get()

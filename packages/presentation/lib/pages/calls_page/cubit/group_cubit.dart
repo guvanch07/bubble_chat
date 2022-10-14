@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:domain/entities/group_entity.dart';
 import 'package:domain/use_cases/create_group_usecase.dart';
 import 'package:domain/use_cases/get_all_group_usecase.dart';
+import 'package:domain/use_cases/join_group_usecase.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,11 +17,13 @@ class GroupCubit extends Cubit<GroupState> {
   final GetCreateGroupUseCase getCreateGroupUseCase;
   final FirebaseStorage storage;
   final GetAllGroupsUseCase getAllGroupsUseCase;
+  final JoinGroupUseCase joinGroupUseCase;
 
   GroupCubit({
     required this.getCreateGroupUseCase,
     required this.storage,
     required this.getAllGroupsUseCase,
+    required this.joinGroupUseCase,
   }) : super(GroupInitial());
 
   Future<void> createGroupe({required GroupEntity groupEntity}) async {
@@ -39,6 +42,16 @@ class GroupCubit extends Cubit<GroupState> {
     streamResponse.listen((groups) {
       emit(GroupLoaded(groups: groups));
     });
+  }
+
+  Future<void> joinGroup({required GroupEntity groupEntity}) async {
+    try {
+      await joinGroupUseCase.call(groupEntity);
+    } on SocketException catch (_) {
+      emit(GroupFailture());
+    } catch (_) {
+      emit(GroupFailture());
+    }
   }
 
   String? get profileImage => _profileUrl;
