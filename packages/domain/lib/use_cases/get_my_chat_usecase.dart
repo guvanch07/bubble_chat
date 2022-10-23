@@ -2,7 +2,7 @@ import 'package:domain/entities/my_chat_entity.dart';
 import 'package:domain/repository/chat_repository.dart';
 
 class GetMyChatUseCase {
-  final IChatRepository repository;
+  final IFirestoreRepository repository;
 
   GetMyChatUseCase({required this.repository});
 

@@ -5,6 +5,7 @@ import 'package:presentation/core/theme/theme.dart';
 import 'package:presentation/pages/calls_page/calls_page.dart';
 import 'package:presentation/pages/contact_page/contacts_page.dart';
 import 'package:presentation/pages/message/main_messages_page.dart';
+import 'package:presentation/pages/notification/notifications_page.dart';
 import 'package:presentation/screens/add_screen/add_contact.dart';
 import 'package:presentation/widgets/avatar.dart';
 import 'package:presentation/widgets/icon_avatar.dart';
@@ -39,7 +40,7 @@ class HomeScreen extends StatelessWidget {
       MessagesPage(uid: uid),
       GroupListUsers(uid: uid),
       ContactsPage(uid: uid),
-      GroupListUsers(uid: uid),
+      const UploadingImage()
     ];
     return Scaffold(
       appBar: AppBar(

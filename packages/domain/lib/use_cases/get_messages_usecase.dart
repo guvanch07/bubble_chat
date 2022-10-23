@@ -2,7 +2,7 @@ import 'package:domain/entities/text_messsage_entity.dart';
 import 'package:domain/repository/chat_repository.dart';
 
 class GetMessageUseCase {
-  final IChatRepository repository;
+  final IFirestoreRepository repository;
 
   GetMessageUseCase({required this.repository});
 

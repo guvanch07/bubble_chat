@@ -2,7 +2,7 @@ import 'package:domain/entities/user_entity.dart';
 import 'package:domain/repository/chat_repository.dart';
 
 class SignUpUseCase {
-  final IChatRepository repository;
+  final IFirestoreRepository repository;
 
   SignUpUseCase({required this.repository});
 

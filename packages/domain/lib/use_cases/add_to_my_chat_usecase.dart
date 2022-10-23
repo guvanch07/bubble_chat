@@ -3,7 +3,7 @@ import 'package:domain/use_cases/base_usecase.dart';
 import 'package:domain/entities/my_chat_entity.dart';
 
 class AddToMyChatUseCase extends UseCaseParams<MyChatEntity, Future<void>> {
-  final IChatRepository repository;
+  final IFirestoreRepository repository;
 
   AddToMyChatUseCase({required this.repository});
 

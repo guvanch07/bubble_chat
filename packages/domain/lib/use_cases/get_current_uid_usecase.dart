@@ -1,7 +1,7 @@
 import 'package:domain/repository/chat_repository.dart';
 
 class GetCurrentUIDUseCase {
-  final IChatRepository repository;
+  final IFirestoreRepository repository;
 
   GetCurrentUIDUseCase({required this.repository});
   Future<String> call() async {

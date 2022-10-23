@@ -2,7 +2,7 @@ import 'package:domain/repository/chat_repository.dart';
 import 'package:domain/use_cases/base_usecase.dart';
 
 class ForgotPasswordUseCase extends UseCaseParams<String, Future<void>> {
-  final IChatRepository repository;
+  final IFirestoreRepository repository;
 
   ForgotPasswordUseCase({required this.repository});
   @override

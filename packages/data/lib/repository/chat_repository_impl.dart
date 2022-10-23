@@ -15,7 +15,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class ChatRepository implements IChatRepository {
+class ChatRepository implements IFirestoreRepository {
   final FirebaseFirestore fireStore;
   final FirebaseAuth auth;
   final GoogleSignIn googleSignIn;
@@ -311,32 +311,7 @@ class ChatRepository implements IChatRepository {
       print(myChatEntity.senderUID);
     }
     await _createGroup(myChatEntity, selectUserList);
-    // final myChatRef = fireStore
-    //     .collection("users")
-    //     .doc(myChatEntity.senderUID)
-    //     .collection("myChat");
-    //
-    // final groupChatRef = fireStore.collection("groupChatChannel");
-    // var channel = {'channelId': myChatEntity.channelId};
-    //
-    //
-    // await groupChatRef.doc(myChatEntity.channelId).set(channel).then((value)async {
-    //
-    //
-    //
-    //   // myChatRef.doc(myChatEntity.channelId).set(myNewChatCurrentUser).catchError((error) {
-    //   //   print(error);
-    //   // });
-    // });
-    /*
-        user -> uid -> myChatCollection ->  xyzGroup
-        */
-    // selectUserList.forEach((otherUid) {
-    //   otherChatRef.doc(otherUid)
-    //       .collection("myChat")
-    //       .doc(myChatEntity.channelId)
-    //       .set(myNewChatCurrentUser);
-    // });
+
     return;
   }
 

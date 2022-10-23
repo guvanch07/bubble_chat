@@ -4,7 +4,7 @@ import 'package:domain/use_cases/base_usecase.dart';
 
 class CreateNewGroupUseCase
     extends UseCaseParams<NewGroupParams, Future<void>> {
-  final IChatRepository repository;
+  final IFirestoreRepository repository;
 
   CreateNewGroupUseCase({required this.repository});
   @override

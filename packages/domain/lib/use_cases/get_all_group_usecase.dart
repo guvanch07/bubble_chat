@@ -2,7 +2,7 @@ import 'package:domain/entities/group_entity.dart';
 import 'package:domain/repository/chat_repository.dart';
 
 class GetAllGroupsUseCase {
-  final IChatRepository repository;
+  final IFirestoreRepository repository;
 
   GetAllGroupsUseCase({required this.repository});
 

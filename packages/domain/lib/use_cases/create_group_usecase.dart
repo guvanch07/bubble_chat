@@ -3,7 +3,7 @@ import 'package:domain/use_cases/base_usecase.dart';
 import 'package:domain/entities/group_entity.dart';
 
 class GetCreateGroupUseCase extends UseCaseParams<GroupEntity, Future<void>> {
-  final IChatRepository repository;
+  final IFirestoreRepository repository;
 
   GetCreateGroupUseCase({required this.repository});
   @override

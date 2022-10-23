@@ -1,7 +1,7 @@
 import 'package:domain/repository/chat_repository.dart';
 
 class SignOutUseCase {
-  final IChatRepository repository;
+  final IFirestoreRepository repository;
 
   SignOutUseCase({required this.repository});
 

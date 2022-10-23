@@ -5,7 +5,7 @@ import 'package:domain/entities/text_messsage_entity.dart';
 import 'package:domain/entities/user_entity.dart';
 import 'package:domain/repository/base_repository.dart';
 
-abstract class IChatRepository implements BaseRepository {
+abstract class IFirestoreRepository implements BaseRepository {
   Future<void> getCreateCurrentUser(UserEntity user);
   Future<void> googleAuth();
   Future<void> forgotPassword(String email);
@@ -26,7 +26,6 @@ abstract class IChatRepository implements BaseRepository {
   Future<String> getChannelId(EngageUserEntity engageUserEntity);
   Future<void> createNewGroup(
       MyChatEntity myChatEntity, List<String> selectUserList);
-
   Future<void> sendTextMessage(
       bool channnel, TextMessageEntity textMessageEntity, String channelId);
   Stream<List<TextMessageEntity>> getMessages(bool channel, String channelId);

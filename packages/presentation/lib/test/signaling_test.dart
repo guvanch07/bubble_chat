@@ -40,7 +40,7 @@ class Signaling {
     });
 
     // Code for collecting ICE candidates below
-    var callerCandidatesCollection = roomRef.collection('callerCandidates');
+    final callerCandidatesCollection = roomRef.collection('callerCandidates');
 
     peerConnection?.onIceCandidate = (RTCIceCandidate candidate) {
       log('Got candidate: ${candidate.toMap()}');

@@ -4,7 +4,7 @@ import 'package:domain/entities/engage_user_entity.dart';
 
 class CreateOneToOneChatChannelUseCase
     extends UseCaseParams<EngageUserEntity, Future<String>> {
-  final IChatRepository repository;
+  final IFirestoreRepository repository;
 
   CreateOneToOneChatChannelUseCase({required this.repository});
   @override

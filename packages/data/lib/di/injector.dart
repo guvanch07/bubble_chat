@@ -18,7 +18,7 @@ Future<void> injectDataModeule(GetIt sl) async {
 
   ///repository
 
-  sl.registerSingleton<IChatRepository>(
+  sl.registerSingleton<IFirestoreRepository>(
     ChatRepository(
       sl.get<FirebaseFirestore>(),
       sl.get<FirebaseAuth>(),
