@@ -1,10 +1,11 @@
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart';
+import 'package:domain/entities/image_params_entity.dart';
 
 class UploadingImage extends StatefulWidget {
   const UploadingImage({Key? key}) : super(key: key);
@@ -33,10 +34,11 @@ class _UploadingImageState extends State<UploadingImage> {
         // Uploading the selected image with some custom meta data
         await storage.ref(fileName).putFile(
             imageFile,
-            SettableMetadata(customMetadata: {
-              'uploaded_by': 'A bad guy',
-              'description': 'Some description...'
-            }));
+            SettableMetadata(
+                customMetadata: const ImageParms(
+                        description: 'A bad guy',
+                        uploadedBy: 'Some description...')
+                    .toMap()));
 
         // Refresh the UI
         setState(() {});
@@ -54,8 +56,8 @@ class _UploadingImageState extends State<UploadingImage> {
 
   // Retriew the uploaded images
   // This function is called when the app launches for the first time or when an image is uploaded or deleted
-  Stream<List<Map<String, dynamic>>> _loadImages() async* {
-    List<Map<String, dynamic>> files = [];
+  Stream<List<ImageParms>> _loadImages() async* {
+    List<ImageParms> files = [];
 
     final ListResult result = await storage.ref().list();
     final List<Reference> allFiles = result.items;
@@ -65,15 +67,13 @@ class _UploadingImageState extends State<UploadingImage> {
       (file) async {
         final String fileUrl = await file.getDownloadURL();
         final FullMetadata fileMeta = await file.getMetadata();
-        files.add(
-          {
-            "url": fileUrl,
-            "path": file.fullPath,
-            "uploaded_by": fileMeta.customMetadata?['uploaded_by'] ?? 'Nobody',
-            "description":
-                fileMeta.customMetadata?['description'] ?? 'No description'
-          },
-        );
+        files.add(ImageParms(
+          description:
+              fileMeta.customMetadata?['description'] ?? 'No description',
+          uploadedBy: fileMeta.customMetadata?['uploaded_by'] ?? 'Nobody',
+          url: fileUrl,
+          path: file.fullPath,
+        ));
       },
     );
 
@@ -108,25 +108,23 @@ class _UploadingImageState extends State<UploadingImage> {
             ],
           ),
           Expanded(
-            child: StreamBuilder(
+            child: StreamBuilder<List<ImageParms>>(
               stream: _loadImages(),
-              builder: (context,
-                  AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+              builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   return ListView.builder(
                     itemCount: snapshot.data?.length ?? 0,
                     itemBuilder: (context, index) {
-                      final Map<String, dynamic> image = snapshot.data![index];
-
+                      final image = snapshot.data![index];
                       return Card(
                         margin: const EdgeInsets.symmetric(vertical: 10),
                         child: ListTile(
                           dense: false,
-                          leading: Image.network(image['url']),
-                          title: Text(image['uploaded_by']),
-                          subtitle: Text(image['description']),
+                          leading: Image.network(image.url ?? ""),
+                          title: Text(image.uploadedBy),
+                          subtitle: Text(image.description),
                           trailing: IconButton(
-                            onPressed: () => _delete(image['path']),
+                            onPressed: () => _delete(image.path ?? ''),
                             icon: const Icon(
                               Icons.delete,
                               color: Colors.red,
@@ -137,7 +135,6 @@ class _UploadingImageState extends State<UploadingImage> {
                     },
                   );
                 }
-
                 return const Center(
                   child: CircularProgressIndicator(),
                 );

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:domain/entities/image_params_entity.dart';
 import 'package:domain/repository/image_repository.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,8 +18,8 @@ class ImageRepository implements IImageRepository {
   void dispose() {}
 
   @override
-  Stream<List<Map<String, dynamic>>> loadImages() async* {
-    List<Map<String, dynamic>> files = [];
+  Stream<List<ImageParms>> loadImages() async* {
+    List<ImageParms> files = [];
 
     final ListResult result = await storage.ref().list();
     final List<Reference> allFiles = result.items;
@@ -28,15 +29,13 @@ class ImageRepository implements IImageRepository {
       (file) async {
         final String fileUrl = await file.getDownloadURL();
         final FullMetadata fileMeta = await file.getMetadata();
-        files.add(
-          {
-            "url": fileUrl,
-            "path": file.fullPath,
-            "uploaded_by": fileMeta.customMetadata?['uploaded_by'] ?? 'Nobody',
-            "description":
-                fileMeta.customMetadata?['description'] ?? 'No description'
-          },
-        );
+        files.add(ImageParms(
+          description:
+              fileMeta.customMetadata?['description'] ?? 'No description',
+          uploadedBy: fileMeta.customMetadata?['uploaded_by'] ?? 'Nobody',
+          url: fileUrl,
+          path: file.fullPath,
+        ));
       },
     );
 
@@ -44,22 +43,23 @@ class ImageRepository implements IImageRepository {
   }
 
   @override
-  Future<void> upload(String inputSource) async {
+  Future<void> upload({
+    required String inputSource,
+    required String uploadBy,
+    required String description,
+  }) async {
     final pickedImage = await pickerXfile(inputSource);
     final String fileName = basename(pickedImage!.path);
     File imageFile = File(pickedImage.path);
 
     try {
-      // Uploading the selected image with some custom meta data
       await storage.ref(fileName).putFile(
-            imageFile,
-            SettableMetadata(
-              customMetadata: {
-                'uploaded_by': 'A bad guy',
-                'description': 'Some description...'
-              },
-            ),
-          );
+          imageFile,
+          SettableMetadata(
+              customMetadata: const ImageParms(
+                      description: 'A bad guy',
+                      uploadedBy: 'Some description...')
+                  .toMap()));
     } on FirebaseException catch (error) {
       if (kDebugMode) {
         print(error);

@@ -11,6 +11,7 @@ import 'package:domain/use_cases/get_messages_usecase.dart';
 import 'package:domain/use_cases/get_my_chat_usecase.dart';
 import 'package:domain/use_cases/get_update_user_usecase.dart';
 import 'package:domain/use_cases/google_sign_in_usecase.dart';
+import 'package:domain/use_cases/image_upload_repository.dart';
 import 'package:domain/use_cases/is_sign_in_usecase.dart';
 import 'package:domain/use_cases/join_group_usecase.dart';
 import 'package:domain/use_cases/send_text_message_usecase.dart';
@@ -58,12 +59,14 @@ Future<void> injectDomainModeule(GetIt sl) async {
       () => SendTextMessageUseCase(repository: sl.call()));
   sl.registerLazySingleton<CreateOneToOneChatChannelUseCase>(
       () => CreateOneToOneChatChannelUseCase(repository: sl.call()));
-
   sl.registerLazySingleton<GetCreatedOneToOneChatsUseCase>(
       () => GetCreatedOneToOneChatsUseCase(repository: sl.call()));
-
   sl.registerLazySingleton<AddToMyChatUseCase>(
       () => AddToMyChatUseCase(repository: sl.call()));
   sl.registerLazySingleton<GetMyChatUseCase>(
       () => GetMyChatUseCase(repository: sl.call()));
+  sl.registerLazySingleton<LoadImagesUseCase>(
+      () => LoadImagesUseCase(sl.call()));
+  sl.registerLazySingleton<UploadImagesUseCase>(
+      () => UploadImagesUseCase(sl.call()));
 }
