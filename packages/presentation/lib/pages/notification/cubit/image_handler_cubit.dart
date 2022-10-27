@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:domain/entities/image_params_entity.dart';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -18,7 +18,6 @@ class ImageHandlerCubit extends Cubit<ImageHandlerState> {
   Future<void> uploadImage(UpLoadImageParams params) async {
     try {
       await _upLoadImagesUseCase(params);
-      emit(ImageHandlerLoaded());
     } on SocketException catch (_) {
       emit(ImageHandlerFailure());
     } catch (_) {
@@ -29,8 +28,7 @@ class ImageHandlerCubit extends Cubit<ImageHandlerState> {
   Future<void> loadImages() async {
     emit(ImageHandlerLoading());
     final streamResponse = _loadImagesUseCase();
-    streamResponse.listen((users) {
-      emit(ImageHandlerLoaded());
-    });
+    streamResponse
+        .listen((images) => emit(ImageHandlerLoaded(imageData: images)));
   }
 }

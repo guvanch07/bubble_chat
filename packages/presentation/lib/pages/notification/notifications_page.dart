@@ -2,10 +2,13 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:domain/entities/image_params_entity.dart';
+import 'package:presentation/pages/notification/cubit/image_handler_cubit.dart';
+import 'package:domain/use_cases/image_upload_repository.dart';
 
 class UploadingImage extends StatefulWidget {
   const UploadingImage({Key? key}) : super(key: key);
@@ -141,6 +144,82 @@ class _UploadingImageState extends State<UploadingImage> {
               },
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class ImageStory extends StatelessWidget {
+  const ImageStory({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ElevatedButton.icon(
+                  onPressed: () =>
+                      context.read<ImageHandlerCubit>().uploadImage(
+                            const UpLoadImageParams(
+                              description: 'dssds',
+                              source: 'camera',
+                              uploadBy: 'by me',
+                            ),
+                          ),
+                  icon: const Icon(Icons.camera),
+                  label: const Text('camera')),
+              ElevatedButton.icon(
+                  onPressed: () =>
+                      context.read<ImageHandlerCubit>().uploadImage(
+                            const UpLoadImageParams(
+                              description: 'sdsdsd',
+                              source: 'gallery',
+                              uploadBy: 'by me',
+                            ),
+                          ),
+                  icon: const Icon(Icons.library_add),
+                  label: const Text('Gallery')),
+            ],
+          ),
+          BlocBuilder<ImageHandlerCubit, ImageHandlerState>(
+            builder: (context, state) {
+              if (state is ImageHandlerLoading) {
+                return const CircularProgressIndicator.adaptive();
+              }
+              if (state is ImageHandlerLoaded) {
+                ListView.builder(
+                  itemCount: state.imageData.length,
+                  itemBuilder: (context, index) {
+                    final data = state.imageData[index];
+
+                    return Card(
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      child: ListTile(
+                        dense: false,
+                        leading: Image.network(data.url ?? ""),
+                        title: Text(data.uploadedBy),
+                        subtitle: Text(data.description),
+                        trailing: IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }
+
+              return const Text('empty');
+            },
+          )
         ],
       ),
     );

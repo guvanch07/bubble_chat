@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:presentation/pages/calls_page/cubit/group_cubit.dart';
 import 'package:presentation/pages/contact_page/cubit/user_cubit.dart';
 import 'package:presentation/pages/message/cubit/messages_cubit.dart';
+import 'package:presentation/pages/notification/cubit/image_handler_cubit.dart';
 import 'package:presentation/screens/auth/auth/auth_cubit.dart';
 import 'package:presentation/screens/auth/credential_cubit/credential_cubit.dart';
 import 'package:presentation/screens/chat/cubit/chat_messages_cubit.dart';
@@ -10,12 +11,19 @@ Future<void> injectPresentationModeule(GetIt sl) async {
   /// servicees
 
   /// blocs
+  sl.registerFactory<ImageHandlerCubit>(
+    () => ImageHandlerCubit(
+      sl.get(),
+      sl.get(),
+    ),
+  );
+
   sl.registerFactory<GroupCubit>(
     () => GroupCubit(
       getCreateGroupUseCase: sl.get(),
       storage: sl.get(),
       getAllGroupsUseCase: sl.get(),
-      joinGroupUseCase: sl.call(),
+      joinGroupUseCase: sl.get(),
     ),
   );
 

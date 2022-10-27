@@ -48,7 +48,18 @@ class ImageRepository implements IImageRepository {
     required String uploadBy,
     required String description,
   }) async {
-    final pickedImage = await pickerXfile(inputSource);
+    // final pickedImage = await pickerXfile(inputSource);
+    // final String fileName = basename(pickedImage!.path);
+    // File imageFile = File(pickedImage.path);
+
+    final picker = ImagePicker();
+    XFile? pickedImage;
+
+    pickedImage = await picker.pickImage(
+        source:
+            inputSource == 'camera' ? ImageSource.camera : ImageSource.gallery,
+        maxWidth: 1920);
+
     final String fileName = basename(pickedImage!.path);
     File imageFile = File(pickedImage.path);
 

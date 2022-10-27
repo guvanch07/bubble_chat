@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
       MessagesPage(uid: uid),
       GroupListUsers(uid: uid),
       ContactsPage(uid: uid),
-      const UploadingImage()
+      const ImageStory()
     ];
     return Scaffold(
       appBar: AppBar(

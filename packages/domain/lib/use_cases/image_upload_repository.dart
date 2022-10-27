@@ -12,7 +12,7 @@ class LoadImagesUseCase extends UseCase<Stream<List<ImageParms>>> {
   Stream<List<ImageParms>> call() => _repository.loadImages();
 
   @override
-  void dispose() {}
+  void dispose() => _repository.dispose();
 }
 
 class UploadImagesUseCase
