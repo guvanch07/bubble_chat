@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'main_messages_page.dart';
 
 class _Stories extends StatelessWidget {
@@ -35,22 +36,45 @@ class _Stories extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, int index) {
-                  final faker = Faker();
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      width: 60,
-                      child: _StoryCard(
-                        index: index,
-                        storyData: StoryData(
-                          name: faker.person.firstName(),
-                          url: Helpers.randomPictureUrl(),
+              child: BlocBuilder<ImageHandlerCubit, ImageHandlerState>(
+                builder: (context, state) {
+                  if (state is ImageHandlerLoading) {
+                    return const CircularProgressIndicator.adaptive();
+                  }
+                  if (state is ImageHandlerLoaded) {
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: state.imageData.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                            width: 60,
+                            child: _StoryCard(
+                              index: index,
+                              url: state.imageData[index].url ?? '',
+                              name: faker.person.firstName(),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }
+                  return ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          width: 60,
+                          child: _StoryCard(
+                            index: index,
+                            name: faker.person.firstName(),
+                            url: Helpers.randomPictureUrl(),
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   );
                 },
               ),
@@ -65,29 +89,29 @@ class _Stories extends StatelessWidget {
 class _StoryCard extends StatelessWidget {
   const _StoryCard({
     Key? key,
-    required this.storyData,
+    required this.url,
+    required this.name,
     required this.index,
   }) : super(key: key);
 
-  final StoryData storyData;
+  final String url;
+  final String name;
   final int index;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () =>
-          Navigator.of(context).push(StoryScreen.route(index, storyData)),
+      onTap: () => Navigator.of(context).push(StoryScreen.route(index, url)),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Hero(
-              tag: "fake$index", child: Avatar(url: storyData.url, radius: 50)),
+          Hero(tag: "fake$index", child: Avatar(url: url, radius: 50)),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(top: 16.0),
               child: Text(
-                storyData.name,
+                name,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 11,

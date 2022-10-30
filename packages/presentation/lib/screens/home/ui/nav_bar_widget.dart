@@ -26,7 +26,7 @@ class __BottomNavigationBarState extends State<_BottomNavigationBar> {
   Widget build(BuildContext context) {
     return Container(
       height: 72,
-      margin: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
+      margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
       child: Neumorphic(
         style: const NeumorphicStyle(
           shadowDarkColor: Colors.black,
@@ -76,8 +76,10 @@ class __BottomNavigationBarState extends State<_BottomNavigationBar> {
 //   BottomNavCubit(super.initialState);
 //   int selectedIndex = 0;
 
-//   void handleItemSelected(int index) {
+//   void handleItemSelected(int index,ValueChanged<int> onItemSelected) {
 //     emit(selectedIndex = index);
+
+//     onItemSelected(index);
 //   }
 //   }
 class _NavigationBarItem extends StatelessWidget {

@@ -4,13 +4,13 @@ import 'package:presentation/core/theme/theme.dart';
 import 'package:presentation/pages/calls_page/cubit/group_cubit.dart';
 import 'package:presentation/pages/contact_page/cubit/user_cubit.dart';
 import 'package:presentation/pages/message/cubit/messages_cubit.dart';
-import 'package:presentation/pages/notification/cubit/image_handler_cubit.dart';
 import 'package:presentation/screens/auth/auth/auth_cubit.dart';
 import 'package:presentation/screens/auth/credential_cubit/credential_cubit.dart';
 import 'package:presentation/screens/auth/ui/login_view.dart';
 import 'package:presentation/screens/chat/cubit/chat_messages_cubit.dart';
 import 'package:presentation/screens/home/ui/main_home_screen.dart';
 import 'package:get_it/get_it.dart';
+import 'package:presentation/screens/story/cubit/image_handler_cubit.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

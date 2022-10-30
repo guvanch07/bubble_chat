@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,8 +8,8 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:domain/entities/image_params_entity.dart';
-import 'package:presentation/pages/notification/cubit/image_handler_cubit.dart';
 import 'package:domain/use_cases/image_upload_repository.dart';
+import 'package:presentation/screens/story/cubit/image_handler_cubit.dart';
 
 class UploadingImage extends StatefulWidget {
   const UploadingImage({Key? key}) : super(key: key);
@@ -186,39 +187,41 @@ class ImageStory extends StatelessWidget {
                   label: const Text('Gallery')),
             ],
           ),
-          BlocBuilder<ImageHandlerCubit, ImageHandlerState>(
-            builder: (context, state) {
-              if (state is ImageHandlerLoading) {
-                return const CircularProgressIndicator.adaptive();
-              }
-              if (state is ImageHandlerLoaded) {
-                ListView.builder(
-                  itemCount: state.imageData.length,
-                  itemBuilder: (context, index) {
-                    final data = state.imageData[index];
-
-                    return Card(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      child: ListTile(
-                        dense: false,
-                        leading: Image.network(data.url ?? ""),
-                        title: Text(data.uploadedBy),
-                        subtitle: Text(data.description),
-                        trailing: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.delete,
-                            color: Colors.red,
+          Expanded(
+            child: BlocBuilder<ImageHandlerCubit, ImageHandlerState>(
+              builder: (context, state) {
+                if (state is ImageHandlerLoading) {
+                  return const CircularProgressIndicator.adaptive();
+                }
+                if (state is ImageHandlerLoaded) {
+                  ListView.builder(
+                    itemCount: state.imageData.length,
+                    itemBuilder: (context, index) {
+                      final data = state.imageData[index];
+                      print(data.url);
+                      return Card(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: ListTile(
+                          dense: false,
+                          leading: CachedNetworkImage(imageUrl: data.url ?? ""),
+                          title: Text(data.uploadedBy),
+                          subtitle: Text(data.description),
+                          trailing: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                );
-              }
+                      );
+                    },
+                  );
+                }
 
-              return const Text('empty');
-            },
+                return const Text('empty');
+              },
+            ),
           )
         ],
       ),
